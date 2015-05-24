@@ -93,10 +93,13 @@ var apiKey;
 
         //xhr.send();
         //callOtherDomain();
+        
+        
 
             $.ajax({
                 type:'GET',
-                datatype:'jsonp',
+                dataType: 'jsonp',
+                jsonpCallback: 'callback',
                 crossDomain: true,
                 url: encodeURI(testParis),
                 success: function(data) {
@@ -106,6 +109,7 @@ var apiKey;
                 complete:
                     console.log("Finished ajax call"),
                 error: function(xhr) {
+                    console.log('Danger Will Robinson, danger!');
                     console.log(xhr);
                 }
             });
