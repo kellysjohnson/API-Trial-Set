@@ -1,4 +1,12 @@
-var domain = 'http://ebird.org/ws1.1/data/obs/geo/recent?';
+var domain = 'http://www.xeno-canto.org/api/2/recordings';
+var query = '?query=';
+var countryGeneric = 'cnt:';
+var unitiedStates = "UnitedStates";
+var paris = "Paris"
+var countryTest = domain + query + countryGeneric;
+var testUS = countryTest + unitiedStates;
+var testParis = countryTest + paris;
+var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil';
 var i;
 var apiKey;
 
@@ -10,7 +18,7 @@ var apiKey;
                 type:'GET',
                 datatype:'jsonp',
                 crossDomain: true,
-                url: encodeURI(domain),
+                url: encodeURI(testUS),
                 success: function(data) {
                     console.log(data);
                     dataDisplay(data);
