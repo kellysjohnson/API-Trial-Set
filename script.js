@@ -98,8 +98,8 @@ var apiKey;
 
             $.ajax({
                 type:'GET',
-                dataType: 'jsonp',
-                jsonpCallback: 'callback',
+                dataType: 'json',
+                jsonCallback: 'callback',
                 crossDomain: true,
                 url: encodeURI(testParis),
                 success: function(data) {
