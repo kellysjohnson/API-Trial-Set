@@ -63,12 +63,36 @@ var apiKey;
 //    if (!xhr) {
 //          alert('CORS not supported');
 //      }
+
 //  ** ------------------------------------------------------------------------ **
 
+// response.addHeader("Access-Control-Allow-Origin", "*"), - not sure where to put this???
+// StackOverflow
+
+// ** ------------------------------------------------------------------------ **
+
+
+//https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
+//var invocation = new XMLHttpRequest();
+//var url = testGivenUrl;
+//var handler = function(xhr) {
+//    console.log(xhr);
+//}
+//
+//
+//function callOtherDomain() {
+//    if(invocation) {
+//        invocation.open('GET', url, true);
+//        invocation.onreadystatechange = handler;
+//        invocation.send();
+//    }
+//}
+// ** ------------------------------------------------------------------------ **
 
     $(document).ready(function(){
 
         //xhr.send();
+        //callOtherDomain();
 
             $.ajax({
                 type:'GET',
