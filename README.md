@@ -8,6 +8,6 @@
 
 ###### who have contributed bird sounds and images to these resources.
 
-###### Intended use, educational.  
+###### Intended use, educational, personal family and friends, non-commercial.  
 
-###### Developing as a project while a student at Prime Digital Academy, for personal, educational, non-commercial use.
+###### Developing as a project while a student at Prime Digital Academy.
