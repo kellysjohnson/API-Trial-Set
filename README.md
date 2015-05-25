@@ -6,8 +6,9 @@
 ###### Bird will be selected randomly and displayed to the viewer.  Points will be awarded and level acheivements will receive
 ###### items in a pre-divised methodology for acheiving and cool, interactive, and unique result.
 
-### Super thanks #### to http://avibase.bsc-eoc.org/myavibase.jsp  AND   http://www.xeno-canto.org/ and all users who have 
-###### contributed bird sounds and images to these resources.
+### Super thanks  to http://avibase.bsc-eoc.org/myavibase.jsp  AND   http://www.xeno-canto.org/ and all users 
+
+###### who have contributed bird sounds and images to these resources.
 
 ###### Intended use, educational.  
 
