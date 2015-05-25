@@ -1,10 +1,8 @@
 #### API-Trial-Set
 
-###### Application for identification of birds based on sound and/or image.  Will include a input test field and testing
-###### to identify whether the user input the correct answer for the bird provided.
+###### Application for identification of birds based on sound and/or image.  Will include a input test field and testing to identify whether the user correctly identify the bird based on image, or sound, depending on which mode the user has selected.
 
-###### Bird will be selected randomly and displayed to the viewer.  Points will be awarded and level acheivements will receive
-###### items in a pre-divised methodology for acheiving and cool, interactive, and unique result.
+###### Bird will be selected randomly and displayed to the viewer.  Points will be awarded and level acheived.  At each level items will be given to the user in a pre-divised methodology for acheiving a cool, interactive, and unique result.  Verison one will include points awarded.  Will not include level ups and items given to the user.
 
 ##### Super thanks  to http://avibase.bsc-eoc.org/myavibase.jsp  AND   http://www.xeno-canto.org/ and all users 
 
@@ -12,4 +10,4 @@
 
 ###### Intended use, educational.  
 
-###### Developed as a project while a student at Prime Digital Academy, for personal and family use.
+###### Developing as a project while a student at Prime Digital Academy, for personal, educational, non-commercial use.
