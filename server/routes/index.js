@@ -20,6 +20,7 @@ router.get("/*", function(req, res, next){
 
 router.get("/apiBirds", function (req, res, next){
     res.json(objectData);
+    console.log("I got apiBirds");
 });
 
 console.log("Index.js ran");

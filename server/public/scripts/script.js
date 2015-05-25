@@ -15,7 +15,7 @@ var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil'
 var i;
 var apiKey;
 
-var localRoute = '/apiBirds';
+var localRoute = '/routes/index/apiBirds';
 
 var birdData;
 
@@ -101,7 +101,8 @@ function dataDisplay(data){
     var dataToAppend = '<div class="holder small">';
     console.log(data.recordings.length);
     for (i=0; i<data.recordings.length; i++){
-        dataToAppend += '<div class="item"><div> Recording'+ i + ' ' + data.recordings[i].en + '</div></div>';
+        var num = i+1;
+        dataToAppend += '<div class="item"><div> Recording'+ ' ' + num + ': ' + '<span class="name">' + data.recordings[i].en + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a><img class="photo" src=' + data.recordings[i].photo + '><div class="copyright">' + data.recordings[i].copyright +'</div><div class="answer"> Answer:' + '<span class="reveal">' + data.recordings[i].en + '</span>' + '</div></div></div>';
     }
     $('.appendHere').append(dataToAppend + '</div>');
 }
@@ -119,30 +120,30 @@ function dataDisplay(data){
             console.log((birdData.recordings.length));
 
             dataDisplay(data);
-            var aRecording = data.recordings[0].en;
-            alert(aRecording);
+            //var aRecording = data.recordings[0].en;
+            //alert(aRecording);
         });
 
 
 
 // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
-            //$.ajax({
-            //    type:'GET',
-            //    url: localRoute,
-            //    dataType: 'json',
-            //    jsonCallback: 'callback',
-            //    crossDomain: true,
-            //    success: function(data) {
-            //        console.log(data);
-            //        dataDisplay(data);
-            //        console.log("I work")
-            //    },
-            //    complete:
-            //        console.log("Finished ajax call"),
-            //    error: function(xhr) {
-            //        console.log('Danger Will Robinson, danger!');
-            //        console.log(xhr);
-            //    }
-            //});
+//            $.ajax({
+//                type:'GET',
+//                url: localRoute,
+//                dataType: 'json',
+//                jsonCallback: 'callback',
+//                crossDomain: true,
+//                success: function(data) {
+//                    console.log(data);
+//                    dataDisplay(data);
+//                    console.log("I work")
+//                },
+//                complete:
+//                    console.log("Finished ajax call"),
+//                error: function(xhr) {
+//                    console.log('Danger Will Robinson, danger!');
+//                    console.log(xhr);
+//                }
+//            });
 
         });

@@ -2,39 +2,21 @@ body {
     color: #398439;
 }
 
+.copyright {
+    background-color: lightgray;
+    width:240px;
+}
 
-/*.user-name img {*/
-/*float: left;*/
-/*margin-right: 10px;*/
-/*width: 60px;*/
-/*border-radius: 5px;*/
-/*border: 1px solid #333;*/
-/*}*/
+.name {
+    color:white;
+}
 
-/*.user-name h3 {*/
-/*float: left;*/
-/*}*/
+.reveal {
+    color:white;
+}
 
-/*.user-name {*/
-/*overflow: auto;*/
-/*}*/
+.reveal:hover {
+    font-size:16px;
+    color:saddlebrown;
+}
 
-/*h3 a {*/
-/*color: inherit;*/
-/*text-decoration: none;*/
-/*font-weight: 300;*/
-/*}*/
-
-/*h3 a:hover {*/
-/*color: #269abc;*/
-/*text-decoration: none;*/
-/*}*/
-
-/*.col-sm-4 {*/
-/*padding-left: 8px;*/
-/*padding-right: 8px;*/
-/*}*/
-
-/*.searchBar {*/
-/*margin-bottom: 15px;*/
-/*}*/

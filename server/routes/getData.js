@@ -18,19 +18,21 @@ callback = function(response) {
     //When data returns add it to the object
     response.on('data', function (res) {
         jsonObject += res;
-        console.log("response.on runs" + res);
+        console.log("response.on runs");
     });
 
     //the whole response has been received, so we just print it out here
+    //KSJ on 'end' I think I need to post this data?
     response.on('end', function () {
         console.log("Hello World!");
-        console.log(jsonObject);
+        //console.log(jsonObject);
     });
 };
 
 var allTheThings = http.request(options, callback).end();
 
-console.log('getData js ran');
-console.log('I am console logging all The Things' + allTheThings);
+
+//console.log('getData js ran');
+//console.log('I am console logging all The Things' + allTheThings);
 
 module.exports = allTheThings;
