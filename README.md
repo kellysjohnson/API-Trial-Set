@@ -9,6 +9,6 @@
 ### Super thanks to http://avibase.bsc-eoc.org/myavibase.jsp  AND   http://www.xeno-canto.org/ and all users who have 
 ### contributed bird sounds and images to these resources.
 
-### Intended use, educational.  
+#### Intended use, educational.  
 
-## Developed as a project while a student at Prime Digital Academy, for personal and family use.
+#### Developed as a project while a student at Prime Digital Academy, for personal and family use.
