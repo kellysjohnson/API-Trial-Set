@@ -15,7 +15,9 @@ var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil'
 var i;
 var apiKey;
 
-var localRoute = '/api/birds';
+var localRoute = '/apiBirds';
+
+var birdData;
 
 //  ** http://www.html5rocks.com/en/tutorials/cors/ ** //
 // Create the XHR object.
@@ -95,27 +97,52 @@ var localRoute = '/api/birds';
 //}
 // ** ------------------------------------------------------------------------ **
 
+function dataDisplay(data){
+    var dataToAppend = '<div class="holder small">';
+    console.log(data.recordings.length);
+    for (i=0; i<data.recordings.length; i++){
+        dataToAppend += '<div class="item"><div> Recording'+ i + ' ' + data.recordings[i].en + '</div></div>';
+    }
+    $('.appendHere').append(dataToAppend + '</div>');
+}
+
+
     $(document).ready(function(){
 
         //xhr.send();
         //callOtherDomain();
 
-            $.ajax({
-                type:'GET',
-                dataType: 'json',
-                jsonCallback: 'callback',
-                crossDomain: true,
-                url: encodeURI(localRoute),
-                success: function(data) {
-                    console.log(data);
-                    dataDisplay(data);
-                },
-                complete:
-                    console.log("Finished ajax call"),
-                error: function(xhr) {
-                    console.log('Danger Will Robinson, danger!');
-                    console.log(xhr);
-                }
-            });
+// Poor mans version, to just copy past the json data into this file, and get object elements.
+        $.get('25MayDataUS.json', function(data) {
+            birdData = data;
+            console.log(".get json data works");
+            console.log((birdData.recordings.length));
+
+            dataDisplay(data);
+            var aRecording = data.recordings[0].en;
+            alert(aRecording);
+        });
+
+
+
+// ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
+            //$.ajax({
+            //    type:'GET',
+            //    url: localRoute,
+            //    dataType: 'json',
+            //    jsonCallback: 'callback',
+            //    crossDomain: true,
+            //    success: function(data) {
+            //        console.log(data);
+            //        dataDisplay(data);
+            //        console.log("I work")
+            //    },
+            //    complete:
+            //        console.log("Finished ajax call"),
+            //    error: function(xhr) {
+            //        console.log('Danger Will Robinson, danger!');
+            //        console.log(xhr);
+            //    }
+            //});
 
         });
