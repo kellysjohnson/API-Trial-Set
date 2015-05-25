@@ -100,26 +100,22 @@ var localRoute = '/api/birds';
         //xhr.send();
         //callOtherDomain();
 
-        $.getJSON( "test.js", function( json ) {
-            console.log( "JSON Data: " + json.users[ 3 ].name );
-        });
-
-            //$.ajax({
-            //    type:'GET',
-            //    dataType: 'json',
-            //    jsonCallback: 'callback',
-            //    crossDomain: true,
-            //    url: encodeURI(localRoute),
-            //    success: function(data) {
-            //        console.log(data);
-            //        dataDisplay(data);
-            //    },
-            //    complete:
-            //        console.log("Finished ajax call"),
-            //    error: function(xhr) {
-            //        console.log('Danger Will Robinson, danger!');
-            //        console.log(xhr);
-            //    }
-            //});
+            $.ajax({
+                type:'GET',
+                dataType: 'json',
+                jsonCallback: 'callback',
+                crossDomain: true,
+                url: encodeURI(localRoute),
+                success: function(data) {
+                    console.log(data);
+                    dataDisplay(data);
+                },
+                complete:
+                    console.log("Finished ajax call"),
+                error: function(xhr) {
+                    console.log('Danger Will Robinson, danger!');
+                    console.log(xhr);
+                }
+            });
 
         });
