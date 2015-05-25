@@ -5,7 +5,6 @@
 ###### Bird will be selected randomly and displayed to the viewer.  Points will be awarded and level achieved.  At each level items will be given to the user in a pre-determined methodology for achieving a cool, interactive, and unique result.  Verison one will include points awarded.  Will not include level ups and items given to the user.
 
 ##### Super thanks  to http://avibase.bsc-eoc.org/myavibase.jsp  AND   http://www.xeno-canto.org/ and all users 
-
 ###### who have contributed bird sounds and images to these resources.
 
 ###### Intended use, educational, personal family and friends, non-commercial.  
