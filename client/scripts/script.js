@@ -1,15 +1,21 @@
+// Hello!
+
 var domain = 'http://www.xeno-canto.org/api/2/recordings';
 var query = '?query=';
 var countryGeneric = 'cnt:';
-var unitiedStates = "united states";                      //United States does not work.
-var paris = "france";
+
+var unitiedStates = 'united&%20states';                    //United States now working.
+var france = 'france';
+
 var countryTest = domain + query + countryGeneric;
 var testUS = countryTest + unitiedStates;
-var testParis = countryTest + paris;                     //France works, but object not returned to console.
+var testFrance = countryTest + france;                     //France works, but object not returned to console.
+
 var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil';  //Works, but object not returned to console.
 var i;
 var apiKey;
 
+var localRoute = '/api/birds';
 
 //  ** http://www.html5rocks.com/en/tutorials/cors/ ** //
 // Create the XHR object.
@@ -93,25 +99,27 @@ var apiKey;
 
         //xhr.send();
         //callOtherDomain();
-        
-        
 
-            $.ajax({
-                type:'GET',
-                dataType: 'json',
-                jsonCallback: 'callback',
-                crossDomain: true,
-                url: encodeURI(testParis),
-                success: function(data) {
-                    console.log(data);
-                    dataDisplay(data);
-                },
-                complete:
-                    console.log("Finished ajax call"),
-                error: function(xhr) {
-                    console.log('Danger Will Robinson, danger!');
-                    console.log(xhr);
-                }
-            });
+        $.getJSON( "test.js", function( json ) {
+            console.log( "JSON Data: " + json.users[ 3 ].name );
+        });
+
+            //$.ajax({
+            //    type:'GET',
+            //    dataType: 'json',
+            //    jsonCallback: 'callback',
+            //    crossDomain: true,
+            //    url: encodeURI(localRoute),
+            //    success: function(data) {
+            //        console.log(data);
+            //        dataDisplay(data);
+            //    },
+            //    complete:
+            //        console.log("Finished ajax call"),
+            //    error: function(xhr) {
+            //        console.log('Danger Will Robinson, danger!');
+            //        console.log(xhr);
+            //    }
+            //});
 
         });
