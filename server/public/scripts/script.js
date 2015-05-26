@@ -21,92 +21,18 @@ var birdData;
 var dataToAppend;
 var someSpace;
 var previous = 1;
-
-//  ** http://www.html5rocks.com/en/tutorials/cors/ ** //
-// Create the XHR object.
-//function createCORSRequest(method, url) {
-//    var xhr = new XMLHttpRequest();
-//    if ("withCredentials" in xhr) {
-//        // XHR for Chrome/Firefox/Opera/Safari.
-//        xhr.open(method, url, true);
-//    } else if (typeof XDomainRequest != "undefined") {
-//        // XDomainRequest for IE.
-//        xhr = new XDomainRequest();
-//        xhr.open(method, url);
-//    } else {
-//        // CORS not supported.
-//        xhr = null;
-//    }
-//    return xhr;
-//}
-//
-//// Helper method to parse the title tag from the response.
-//function getTitle(text) {
-//    return text.match('<title>(.*)?</title>')[1];
-//}
-//
-//// Make the actual CORS request.
-////function makeCorsRequest() {
-////    // All HTML5 Rocks properties support CORS.
-////    var url = 'http://updates.html5rocks.com';
-////
-////    var xhr = createCORSRequest('GET', url);
-////    if (!xhr) {
-////        alert('CORS not supported');
-////        return;
-////    }
-////
-////    // Response handlers.
-////    xhr.onload = function() {
-////        var text = xhr.responseText;
-////        var title = getTitle(text);
-////        alert('Response from CORS request to ' + url + ': ' + title);
-////    };
-////
-////    xhr.onerror = function() {
-////        alert('Woops, there was an error making the request.');
-////    };
-////
-////    xhr.send();
-////}
-//
-//var xhr = createCORSRequest('GET', testGivenUrl);
-//    if (!xhr) {
-//          alert('CORS not supported');
-//      }
-
-//  ** ------------------------------------------------------------------------ **
-
-// response.addHeader("Access-Control-Allow-Origin", "*"), - not sure where to put this???
-// StackOverflow
-
-// ** ------------------------------------------------------------------------ **
-
-
-//https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS
-//var invocation = new XMLHttpRequest();
-//var url = testGivenUrl;
-//var handler = function(xhr) {
-//    console.log(xhr);
-//}
-//
-//
-//function callOtherDomain() {
-//    if(invocation) {
-//        invocation.open('GET', url, true);
-//        invocation.onreadystatechange = handler;
-//        invocation.send();
-//    }
-//}
-// ** ------------------------------------------------------------------------ **
+var answerArray = [];
+var objectID;
+var correctAnswer;
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
 }
+
 var answerEntryField = '<div class="input-group"><input type="text" class="form-control js-query" placeholder="common name"><div class="thisone"><div class="input-group-btn"><button class="btn btn-input-group btn-success js-search"><span class="submit">Submit</span></button></div></div></div>';
 
-//var birdID = data.recordings[i].en;
-//var photoAndCopyright = '<img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div>';
+//var birdName = data.recordings[i].en;
+//var photoAndCopyrightHTML = '<img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div>';
 
 function dataDisplay(data){
     birdData = data;
@@ -134,16 +60,18 @@ function dataDisplay(data){
 //        });
 //
         $('.newbird').on("click", function() {
-            //var clearDOM = document.getElementsByClassName('eachSet');
-            //if(clearDOM.style.display = "block") {clearDOM.style.display = "none"}
 
+            // Deletes the previously displayed bird object.  Previous is set at the end of on-click with the clicked id number.
             var prevBird = document.getElementById(previous);
             if(prevBird.style.display = "block") {prevBird.style.display = "none"}
 
+            // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
             var number = randomNumber(0, ider);
             console.log(number);
+            objectID = number;
 
+            // Function displays the bird based on the index determined by random number.
             function toggleVisibility (number) {
                 var visBird = document.getElementById(number);
 
@@ -152,17 +80,19 @@ function dataDisplay(data){
                 console.log(visBird);
             }
 
+            // Calls toggleVisibility which shows bird
             toggleVisibility(number);
+
+            // Sets previous to be used when the next button is clicked again.
             previous = number;
+
+            // Identify correct answer
+            correctAnswer = birdData.recordings[objectID].en;
+            console.log(correctAnswer);
 
             });
 
 
-                //This did NOT work to show which bird's id matches the random number.
-                //$('.appendHere').find("div[id=' + number + ']").children().show().
-//
-
-//
 //            //Need to also get the bird's name that matches the id. "i"
 //            //Then need to create 4 radio buttons
 //            //One radio button will take the name of the correct bird, using 'i'
