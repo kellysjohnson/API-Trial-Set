@@ -26,9 +26,13 @@ body {
 
 .eachSet {
     margin-left: 15px;
+    display: none;
 }
 
 .newbird {
     margin-left: 370px;
 }
 
+.recording {
+    margin-left:-15px;
+}

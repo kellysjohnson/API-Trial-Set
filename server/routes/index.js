@@ -15,7 +15,7 @@ router.get("/apiBirds", function (req, res, next){
     console.log('objectData created');
     birdData.go(function(data){
         console.log('sending response');
-        console.log(data);
+        //console.log(data);
         res.json(data);
     });
 });
