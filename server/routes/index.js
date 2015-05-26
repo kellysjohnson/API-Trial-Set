@@ -5,22 +5,19 @@ var objectData = require('./getData');
 
 var path = require('path');
 
-//var domain = 'http://www.xeno-canto.org/api/2/recordings';
-//var query = '?query=';
-//var countryGeneric = 'cnt:';
-//
-//var unitiedStates = 'united&%20states';
-
-
-router.get("/*", function(req, res, next){
-    var file = req.params[0] || 'views/index.html';
-
-    res.sendFile(path.join(__dirname, '../public', file));
+router.get("/", function(req, res, next){
+    res.sendFile(path.join(__dirname, '../public', 'views/index.html'));
 });
 
 router.get("/apiBirds", function (req, res, next){
-    res.json(objectData);
-    console.log("I got apiBirds");
+    console.log('apiBirds called');
+    var birdData = new objectData();
+    console.log('objectData created');
+    birdData.go(function(data){
+        console.log('sending response');
+        console.log(data);
+        res.json(data);
+    });
 });
 
 console.log("Index.js ran");

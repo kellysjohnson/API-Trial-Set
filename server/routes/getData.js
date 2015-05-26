@@ -10,29 +10,39 @@ var unitiedStates = 'united&%20states';
 
 
 // https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
-var options = domain + query + countryGeneric + unitiedStates;
+var options =  domain + query + countryGeneric + unitiedStates;
+var jsonObject;
 
-callback = function(response) {
-    var jsonObject = {};
 
-    //When data returns add it to the object
-    response.on('data', function (res) {
-        jsonObject += res;
-        console.log("response.on runs");
+
+
+function GetData(){
+    if (!this instanceof GetData){
+        return new GetData();
+    }
+}
+
+GetData.prototype.go = function(callback) {
+
+    var request = http.request(options, function (response) {
+        jsonObject = '';                                            //define jsonObject as a string so as to not have the data return "[Object, object]"
+
+        //When data returns add it to the object
+        response.on('data', function (res) {
+            jsonObject += res;
+            console.log("response.on runs");
+        });
+
+        //the whole response has been received, so we just print it out here
+        response.on('end', function () {
+            console.log('At response.end');
+            jsonObject = JSON.parse(jsonObject);                    //Here, we take the string and make it a jsonObject
+            callback(jsonObject);
+        });
+
     });
 
-    //the whole response has been received, so we just print it out here
-    //KSJ on 'end' I think I need to post this data?
-    response.on('end', function () {
-        console.log("Hello World!");
-        //console.log(jsonObject);
-    });
+    request.end();
 };
 
-var allTheThings = http.request(options, callback).end();
-
-
-//console.log('getData js ran');
-//console.log('I am console logging all The Things' + allTheThings);
-
-module.exports = allTheThings;
+module.exports = GetData;

@@ -15,7 +15,7 @@ var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil'
 var i;
 var apiKey;
 
-var localRoute = '/routes/index/apiBirds';
+var localRoute = '/apiBirds';
 
 var birdData;
 var dataToAppend;
@@ -112,7 +112,7 @@ function dataDisplay(data){
     console.log(data.recordings.length);
     for (i=0; i<data.recordings.length; i++){
         var num = i+1;
-        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div> Recording'+ ' ' + num + ': ' + '<span class="name">' + someSpace + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a></div><div class="row two"><img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div>';
+        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a></div><div class="row two"><img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div>';
     }
     $('.appendHere').append(dataToAppend);
 }
@@ -124,44 +124,62 @@ function dataDisplay(data){
         //callOtherDomain();
 
 // Poor mans version, to just copy past the json data into this file, and get object elements.
-        $.get('25MayDataUS.json', function(data) {
-            birdData = data;
-            console.log(".get json data works");
-            console.log((birdData.recordings.length));
-
-            dataDisplay(data);
-            //var aRecording = data.recordings[0].en;
-            //alert(aRecording);
-        });
-
-        $('.newbird').on("click", function(){
-            var ider = birdData.recordings.length -1;
-            var number = randomNumber(0, ider);
-            console.log(number);
-
-            //$('.appendHere').find("div[id=' + number + ']").children().show();
-
-        });
+//        $.get('25MayDataUS.json', function(data) {
+//            birdData = data;
+//            console.log(".get json data works");
+//            console.log((birdData.recordings.length));
+//
+//            dataDisplay(data);
+//            //var aRecording = data.recordings[0].en;
+//            //alert(aRecording);
+//        });
+//
+//        $('.newbird').on("click", function(){
+//            var ider = birdData.recordings.length -1;
+//            var number = randomNumber(0, ider);
+//            console.log(number);
+//
+//            $('.appendHere').first().show();
+//
+//            //This did NOT work to show which bird's id matches the random number.
+//            //$('.appendHere').find("div[id=' + number + ']").children().show();
+//
+//            //Need to also get the bird's name that matches the id. "i"
+//            //Then need to create 4 radio buttons
+//            //One radio button will take the name of the correct bird, using 'i'
+//            //The other three radio buttons will need to each use a random number to get the 'i',
+//            //     then extract the corresponding name.
+//
+//            //When the radio button is clicked.  That attribute/value must be tested against the 'correct' value.
+//            //  if they match, the a button unhides, that says "correct", a button also pops in that says "+10".
+//            //  if they do not match, then a box unhides that says "wrong" and the user can select another radio button.
+//
+//            //Alternatively, the user can use the user text input field, and that can be tested
+//            //  against the actual bird name...
+//            //     ??s can it be can insensitive/ can it be off by 1-2, more letters
+//
+//
+//        });
 
 
 // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
-//            $.ajax({
-//                type:'GET',
-//                url: localRoute,
-//                dataType: 'json',
-//                jsonCallback: 'callback',
-//                crossDomain: true,
-//                success: function(data) {
-//                    console.log(data);
-//                    dataDisplay(data);
-//                    console.log("I work")
-//                },
-//                complete:
-//                    console.log("Finished ajax call"),
-//                error: function(xhr) {
-//                    console.log('Danger Will Robinson, danger!');
-//                    console.log(xhr);
-//                }
-//            });
+            $.ajax({
+                type:'GET',
+                url: localRoute,
+                dataType: 'json',
+                jsonCallback: 'callback',
+                crossDomain: true,
+                success: function(data) {
+                    console.log(data);
+                    dataDisplay(data);
+                    console.log("I work")
+                },
+                complete:
+                    console.log("Finished ajax call"),
+                error: function(xhr) {
+                    console.log('Danger Will Robinson, danger!');
+                    console.log(xhr);
+                }
+            });
 
         });
