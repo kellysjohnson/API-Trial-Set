@@ -18,6 +18,8 @@ var apiKey;
 var localRoute = '/routes/index/apiBirds';
 
 var birdData;
+var dataToAppend;
+var someSpace;
 
 //  ** http://www.html5rocks.com/en/tutorials/cors/ ** //
 // Create the XHR object.
@@ -97,14 +99,22 @@ var birdData;
 //}
 // ** ------------------------------------------------------------------------ **
 
+function randomNumber(min, max) {
+    return Math.floor(Math.random() * (1 + max - min) + min);
+}
+var answerEntryField = '<div class="input-group"><input type="text" class="form-control js-query" placeholder="common name"><div class="thisone"><div class="input-group-btn"><button class="btn btn-input-group btn-success js-search"><span class="submit">Submit</span></button></div></div></div>';
+
+//var birdID = data.recordings[i].en;
+
 function dataDisplay(data){
-    var dataToAppend = '<div class="holder small">';
+    dataToAppend = '';
+    someSpace = 12345678765432;
     console.log(data.recordings.length);
     for (i=0; i<data.recordings.length; i++){
         var num = i+1;
-        dataToAppend += '<div class="item"><div> Recording'+ ' ' + num + ': ' + '<span class="name">' + data.recordings[i].en + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a><img class="photo" src=' + data.recordings[i].photo + '><div class="copyright">' + data.recordings[i].copyright +'</div><div class="answer"> Answer:' + '<span class="reveal">' + data.recordings[i].en + '</span>' + '</div></div></div>';
+        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div> Recording'+ ' ' + num + ': ' + '<span class="name">' + someSpace + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a></div><div class="row two"><img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div>';
     }
-    $('.appendHere').append(dataToAppend + '</div>');
+    $('.appendHere').append(dataToAppend);
 }
 
 
@@ -124,6 +134,14 @@ function dataDisplay(data){
             //alert(aRecording);
         });
 
+        $('.newbird').on("click", function(){
+            var ider = birdData.recordings.length -1;
+            var number = randomNumber(0, ider);
+            console.log(number);
+
+            //$('.appendHere').find("div[id=' + number + ']").children().show();
+
+        });
 
 
 // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
