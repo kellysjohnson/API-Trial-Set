@@ -24,12 +24,13 @@ var previous = 1;
 var answerArray = [];
 var objectID;
 var correctAnswer;
+var youreCorrect;
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
 }
 
-var answerEntryField = '<div class="input-group"><input type="text" class="form-control js-query" placeholder="common name"><div class="thisone"><div class="input-group-btn"><button class="btn btn-input-group btn-success js-search"><span class="submit">Submit</span></button></div></div></div>';
+var answerEntryField = '<div class="input-group"><input type="text" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group btn-success js-search">Submit</button></div>';
 
 //var birdName = data.recordings[i].en;
 //var photoAndCopyrightHTML = '<img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div>';
@@ -88,9 +89,32 @@ function dataDisplay(data){
 
             // Identify correct answer
             correctAnswer = birdData.recordings[objectID].en;
+            correctAnswer = correctAnswer.toLowerCase();
             console.log(correctAnswer);
 
             });
+
+        $('.appendHere').on("click", '.js-search', function() {
+            var enteredAnswer = $('.js-query').val().toLowerCase();
+            console.log(enteredAnswer);
+
+            if (correctAnswer == enteredAnswer) {
+                console.log(Hi);
+                youreCorrect = '<div class="btn btn-group-sm btn-success">Correct !</div>';
+                $('.header').append(youreCorrect);
+            } else {
+                console.log("Nope!")
+            }
+        });
+
+            $('.js-query').keyup(function(key) {
+
+                if (key.keyCode == 13) {
+                    $('.js-search').click();
+                }
+            });
+
+
 
 
 //            //Then need to create 4 radio buttons
