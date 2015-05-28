@@ -1,5 +1,6 @@
 // Hello!
 
+
 var domain = 'http://www.xeno-canto.org/api/2/recordings';
 var query = '?query=';
 var countryGeneric = 'cnt:';
@@ -25,12 +26,16 @@ var answerArray = [];
 var objectID;
 var correctAnswer;
 var youreCorrect;
+var youreWrong;
+var number;
+var element;
+var searchElement;
+var activeLink;
+var modal;
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
 }
-
-var answerEntryField = '<div class="input-group"><input type="text" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group btn-success js-search">Submit</button></div>';
 
 //var birdName = data.recordings[i].en;
 //var photoAndCopyrightHTML = '<img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div>';
@@ -42,12 +47,46 @@ function dataDisplay(data){
     console.log(data.recordings.length);
     for (i=0; i<data.recordings.length; i++){
         var num = i+1;
-        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + '  ' + '<a target ="_blank" href='+ data.recordings[i].file +'>Listen</a></div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
+        var submitnum = i +1000;
+        var listennum = i +2000;
+
+        var audio = data.recordings[i].file;
+
+        var ahrefListen = '<a ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a>';
+        var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
+
+        modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
+
+        var answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group btn-success js-search">Submit</button></div>';
+
+        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + modal + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
     }
     $('.appendHere').append(dataToAppend);
 }
 
-    $(document).ready(function(){
+
+function checkAnswer() {
+    searchElement = objectID + 1000;
+    console.log(searchElement);
+
+    //convert answer to lower case for test
+    element = $('#' + searchElement).val();
+    element = element.toLowerCase();
+    console.log(element);
+
+    //test for correct answer
+    if (correctAnswer == element) {
+        console.log("Hi");
+        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
+        $('.addAnswers').append(youreCorrect);
+    } else {
+        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X</div>';
+        $('.addAnswers').append(youreWrong);
+        console.log("Nope!")
+    }
+}
+
+    $(document).ready(function() {
 
 // Poor mans version, to just copy past the json data into this file, and get object elements.
 //        $.get('25MayDataUS.json', function(data) {
@@ -60,23 +99,33 @@ function dataDisplay(data){
 //            //alert(aRecording);
 //        });
 //
-        $('.newbird').on("click", function() {
+        $('.newbird').on("click", function () {
 
             // Deletes the previously displayed bird object.  Previous is set at the end of on-click with the clicked id number.
             var prevBird = document.getElementById(previous);
-            if(prevBird.style.display = "block") {prevBird.style.display = "none"}
+            if (prevBird.style.display = "block") {
+                prevBird.style.display = "none"
+            }
+
+            // Hide correct button
+            $('.correct').remove();
+            $('.wrong').remove();
 
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
-            var number = randomNumber(0, ider);
+            number = randomNumber(0, ider);
             console.log(number);
             objectID = number;
 
             // Function displays the bird based on the index determined by random number.
-            function toggleVisibility (number) {
+            function toggleVisibility(number) {
                 var visBird = document.getElementById(number);
 
-                if(visBird.style.display = "none") {visBird.style.display = "block"} else {visBird.style.display = "none"}
+                if (visBird.style.display = "none") {
+                    visBird.style.display = "block"
+                } else {
+                    visBird.style.display = "none"
+                }
 
                 console.log(visBird);
             }
@@ -92,29 +141,129 @@ function dataDisplay(data){
             correctAnswer = correctAnswer.toLowerCase();
             console.log(correctAnswer);
 
-            });
+            // Identify the link for playing the bird song
+            activeLink = birdData.recordings[number].file;
 
-        $('.appendHere').on("click", '.js-search', function() {
-            var enteredAnswer = $('.js-query').val().toLowerCase();
-            console.log(enteredAnswer);
-
-            if (correctAnswer == enteredAnswer) {
-                console.log(Hi);
-                youreCorrect = '<div class="btn btn-group-sm btn-success">Correct !</div>';
-                $('.header').append(youreCorrect);
-            } else {
-                console.log("Nope!")
-            }
         });
 
-            $('.js-query').keyup(function(key) {
-
-                if (key.keyCode == 13) {
-                    $('.js-search').click();
-                }
-            });
+        //// Audio2 is to replace the listen button with an audio track, mayhaps
+        //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
 
 
+        $('.appendHere').on("click", '.js-search', function () {
+
+            //Hide previous answers
+            $('.correct').remove();
+            $('.wrong').remove();
+
+            checkAnswer();
+        });
+
+        // TO DO: Need to resolve HOW to get KEYPRESS to work
+        //var keycode;
+        //
+        //$('.appendHere').keyup('#submitnum', function (event) {
+        //    keycode = (event.keyCode ? event.keyCode : event.which);
+        //    if (keyCode == 13) {
+        //        console.log("hi")
+        //        checkAnswer();
+        //    }
+        //});
+        // ************************************************* KEYPRESS
+
+
+// Try to create a pop up window so that the audio file will display in pop up window.
+//
+//        //var matchClass=['popup1','popup2','popup3'];
+//        ////Set your 3 basic sizes and other options for the class names above - create more if needed
+//        //var popup1 = 'width=400,height=300,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
+//        var popup2 = 'width=400,height=400,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
+//        //var popup3 = 'width=1000,height=750,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
+//
+//        //The pop-up function
+//        function tfpop(){
+//            var x = 0;
+//            var popClass;
+//            ////Cycle through the class names
+//            //while(x < matchClass.length){
+//            //    popClass = "'."+matchClass[x]+"'";
+//            //    //Attach the clicks to the popup classes
+//            $(eval(popup2)).click(function() {
+//                //Get the destination URL and the class popup specs
+//                console.log(this);
+//
+//                var popurl = $(this).attr('href');
+//
+//                var popupSpecs = $(this).attr('class');
+//                //Create a "unique" name for the window using a random number
+//                var popupName = Math.floor(Math.random()*10000001);
+//                //Opens the pop-up window according to the specified specs
+//                newwindow=window.open(popurl,popupName,eval(popupSpecs));
+//                return false;
+//            });
+//
+//        }
+//
+//        $('.appendHere').on("click", '#listennum', function () {
+//            console.log('I clicked on listen');
+//            //$(function(){
+//            //    console.log("I tried to load a modal");
+//            //    $("#modal-launcher, #modal-close").click(function () {
+//            //        $("#modal-content,#modal-background").toggleClass("active");
+//            //    });
+//            $(function() {
+//                tfpop();
+//            });
+//
+//        });
+
+
+
+
+            ////comment out appController using Angular because that does NOT seem to be working.
+        //var myApp = angular.module('bird.song.audio', ['ngRoute', 'ui.bootstrap']);
+        //var myAppController = myApp.controller('ModalBSCtrl', function ($scope, $modal, $log) {
+        //
+        //
+        //    $scope.items = [activeLink];
+        //
+        //    $scope.animationsEnabled = true;
+        //
+        //    $scope.open = function (size) {
+        //
+        //        var modalInstance = $modal.open({
+        //            animation: $scope.animationsEnabled,
+        //            controller: 'ModalInstanceCtrl',
+        //            size: size,
+        //            resolve: {
+        //                items: function () {
+        //                    return $scope.items;
+        //                }
+        //            }
+        //        });
+        //
+        //        $scope.toggleAnimation = function () {
+        //            $scope.animationsEnabled = !$scope.animationsEnabled;
+        //        };
+        //
+        //    };
+        //
+        //    angular.module('bird.song.audio').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+        //
+        //        $scope.items = items;
+        //        $scope.selected = {
+        //            item: $scope.items[0]
+        //        };
+        //
+        //        $scope.ok = function () {
+        //            $modalInstance.close($scope.selected.item);
+        //        };
+        //
+        //        $scope.cancel = function () {
+        //            $modalInstance.dismiss('cancel');
+        //        };
+        //    });
+        // });
 
 
 //            //Then need to create 4 radio buttons
@@ -136,22 +285,22 @@ function dataDisplay(data){
 
 // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
             $.ajax({
-                type:'GET',
+                type: 'GET',
                 url: localRoute,
                 dataType: 'json',
                 jsonCallback: 'callback',
                 crossDomain: true,
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     dataDisplay(data);
                     console.log("I work")
                 },
-                complete:
-                    console.log("Finished ajax call"),
-                error: function(xhr) {
+                complete: console.log("Finished ajax call"),
+                error: function (xhr) {
                     console.log('Danger Will Robinson, danger!');
                     console.log(xhr);
                 }
             });
 
         });
+
