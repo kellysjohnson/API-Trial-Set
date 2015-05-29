@@ -15,17 +15,33 @@ body {
     color:white;
 }
 
+img {
+    height:50px;
+    width:50px;
+}
+
+.headerflag {
+    display:inline-block;
+}
+
 .reveal:hover {
     font-size:16px;
     color:saddlebrown;
 }
 
+.count {
+    margin-left:10px;
+}
 .photo {
     margin-left: 15px;
 }
 
+.countries {
+    margin-left: 4px;
+}
+
 .eachSet {
-    margin-left: 15px;
+    margin-left: 35px;
     display: none;
 }
 
@@ -38,11 +54,11 @@ body {
 }
 
 .addAnswers {
-    margin-left: 445px;
+    margin-left: 318px;
 }
 
 .letsplay {
-    margin-left: 320px;
+    margin-left: 200px;
     background-color: darkseagreen;
     border-radius: 5px;
     border-width: 3px;
@@ -53,13 +69,16 @@ body {
 
 
 .popup2 {
-    height: 400px;
-    width: 400px;
+    color:white;
+}
 
+.popup2:hover {
+    text-decoration: none;
+    color: white;
 }
 
 .points {
-    margin-left: 320px;
+    margin-left: 200px;
     background-color: darkseagreen;
     border-radius: 5px;
     border-width: 3px;
@@ -68,9 +87,31 @@ body {
     padding-left: 10px;
 }
 
+.underflagdiv {
+    color:white;
+}
+
+.submit {
+    background-color: darkseagreen;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #8a6d3b;
+    color: white;
+    margin-left: 2px;
+}
+
+.brown {
+    background-color: #8a6d3b;
+    color: white;
+    text-decoration: none;
+    border-color: darkseagreen;
+}
+
+
+
 .questions {
-    color: darkseagreen;
-    margin-left: 425px;
+    color: rgba(44, 168, 208, 0.85);
+    margin-left: 310px;
 }
 
 .points:hover {

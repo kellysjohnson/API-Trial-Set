@@ -27,9 +27,26 @@
     <div class="searchBar col-sm-8 col-sm-offset-2">
 
         <h3 class="header center-block">Bird Identification: Our Feathered Friends</h3>
-        <p class="count"> Count to 3. 1,2,3 ...then click new bird!</p>
+        <p class="count"> Count to 3. 1,2,3 ...then click get a flock by picking on a country flag!</p>
+
+        <div class="countries">
+            <div ng-app="myApp" ng-controller="FlagCtrl">
+                <div class="flagdiv">
+                    <div class="headerflag" ng-repeat="country in country">
+                        <img class="specificflag {{country.code}}" ng-src="{{country.country}}">
+                        <!--<a href="#{{country.name}}"> {{country.name}}</a>-->
+                    </div>
+                </div>
+                <p class="underflagdiv"> Questions </p>
+            </div>
+        </div>
+
+        <!--<div class="col-md-offset-2">-->
+            <!--<main ng-view></main>-->
+        <!--</div>-->
+
         <div class="buttonsHolder">
-            <div class="letsplay btn btn-group-sm"> Let's Play! </div>
+            <div class="letsplay btn btn-group-sm" style="display:none"> Let's Play! </div>
             <div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>
         </div>
         <div class="addAnswers">
@@ -56,8 +73,8 @@
             <script src="../stylesheets/bootstrap.min.js"></script>
             <script src="../vendor/angular/angular.min.js"></script>
             <script src="../vendor/angular-route/angular-route.min.js"></script>
-            <script src="../vendor/ui-bootstrap-tpls-0.13.0.min.js"></script>
             <script src="../scripts/script.js"></script>
+            <script src="../scripts/controllers/flagControllers.min.js"></script>
 <!--END SCRIPTS-->
 </body>
 

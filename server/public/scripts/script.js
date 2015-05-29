@@ -64,12 +64,12 @@ function dataDisplay(data){
 
         var audio = data.recordings[i].file;
 
-        var ahrefListen = '<a ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a>';
+        var ahrefListen = '<div class="btn btn-group-sm brown"><a ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
         //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
 
-        var answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group btn-success js-search">Submit</button></div>';
+        var answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
 
         dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
     }
@@ -100,7 +100,6 @@ function checkAnswer() {
     // ASK SCOTT: Better way to update just the number of points earned??
         $('.points').remove();
         sum = sum +10;
-        qnumber += 1;
         if (sum >= 100){sum = 100}
         var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
         $('.buttonsHolder').prepend(pointsDisplay);
@@ -192,8 +191,11 @@ function toggleVisibility(number) {
 
             // Display which question, out of how many that you are on
             displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
-            $('.count').append(displayQuestions);
-
+            if (qnumber==2) {
+                $('.underflagdiv').replaceWith(displayQuestions);
+            } else {
+                $('.flagdiv').append(displayQuestions);
+            }
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
             number = randomNumber(0, ider);
@@ -210,7 +212,7 @@ function toggleVisibility(number) {
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
-            if (qnumber==10) {
+            if (qnumber>=10) {
                 var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
                 if (result == "yes") {
                     location.reload();
@@ -224,7 +226,9 @@ function toggleVisibility(number) {
 
         //// Audio2 is to replace the listen button with an audio track, mayhaps
         //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
-
+        $('.specificflag').on("click", function(){
+            $('.letsplay').show();
+        });
 
         $('.appendHere').on("click", '.js-search', function () {
 
