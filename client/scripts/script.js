@@ -182,6 +182,9 @@ function toggleVisibility(number) {
                 prevBird.style.display = "none"
             }
 
+            // Re-able the "Submit" button
+            $('.js-search').attr("disabled", false);
+
             // Hide correct button
             $('.correct').remove();
             $('.wrong').remove();
@@ -230,6 +233,9 @@ function toggleVisibility(number) {
             $('.wrong').remove();
 
             checkAnswer();
+
+            //Try to disable the search button so that only one click can occur per answer
+            $(this).attr("disabled", true);
         });
 
         // TO DO: Need to resolve HOW to get KEYPRESS to work
