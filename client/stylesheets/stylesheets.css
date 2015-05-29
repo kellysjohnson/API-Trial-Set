@@ -30,7 +30,7 @@ body {
 }
 
 .newbird {
-    margin-left: 370px;
+    margin-left: 2px;
 }
 
 .recording {
@@ -38,8 +38,19 @@ body {
 }
 
 .addAnswers {
-    margin-left: 370px;
+    margin-left: 445px;
 }
+
+.letsplay {
+    margin-left: 320px;
+    background-color: darkseagreen;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #8a6d3b;
+    color: #8a6d3b;
+    padding-left: 10px;
+}
+
 
 .popup2 {
     height: 400px;
@@ -47,8 +58,25 @@ body {
 
 }
 
+.points {
+    margin-left: 320px;
+    background-color: darkseagreen;
+    border-radius: 5px;
+    border-width: 3px;
+    border-color: #8a6d3b;
+    color: white;
+    padding-left: 10px;
+}
 
+.questions {
+    color: darkseagreen;
+    margin-left: 425px;
+}
 
+.points:hover {
+    color: white;
+    text-decoration: none;
+}
 
 
 #modal-background {

@@ -22,16 +22,28 @@ var birdData;
 var dataToAppend;
 var someSpace;
 var previous = 1;
+
 var answerArray = [];
+var number;
 var objectID;
 var correctAnswer;
 var youreCorrect;
 var youreWrong;
-var number;
+
 var element;
 var searchElement;
 var activeLink;
 var modal;
+
+// Total number of questions = total.  The number of points you have earned = sum;
+var numQs = 10;
+var sum = 0;
+var total = 10*numQs;
+var qnumber = 1;
+
+var displayQuestions;
+
+
 
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
@@ -55,11 +67,11 @@ function dataDisplay(data){
         var ahrefListen = '<a ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a>';
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
-        modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
+        //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
 
         var answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group btn-success js-search">Submit</button></div>';
 
-        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + modal + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
+        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
     }
     $('.appendHere').append(dataToAppend);
 }
@@ -74,17 +86,47 @@ function checkAnswer() {
     element = element.toLowerCase();
     console.log(element);
 
+    // Identify correct answer
+    correctAnswer = birdData.recordings[objectID].en;
+    correctAnswer = correctAnswer.toLowerCase();
+    console.log(correctAnswer);
+
     //test for correct answer
     if (correctAnswer == element) {
-        console.log("Hi");
         youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
         $('.addAnswers').append(youreCorrect);
+        console.log("Hi");
+
+    // ASK SCOTT: Better way to update just the number of points earned??
+        $('.points').remove();
+        sum = sum +10;
+        qnumber += 1;
+        if (sum >= 100){sum = 100}
+        var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
+        $('.buttonsHolder').prepend(pointsDisplay);
+
     } else {
+        console.log("Nope!");
         youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X</div>';
         $('.addAnswers').append(youreWrong);
-        console.log("Nope!")
+
     }
 }
+
+// Function displays the bird based on the index determined by random number.
+function toggleVisibility(number) {
+    var visBird = document.getElementById(number);
+
+    if (visBird.style.display = "none") {
+        visBird.style.display = "block"
+    } else {
+        visBird.style.display = "none"
+    }
+
+    console.log(visBird);
+}
+
+
 
     $(document).ready(function() {
 
@@ -99,7 +141,40 @@ function checkAnswer() {
 //            //alert(aRecording);
 //        });
 //
+        $('.letsplay').on("click", function(){
+            // Using the length of the array provided, a bird object is randomly selected
+            var ider = birdData.recordings.length - 1;
+            number = randomNumber(0, ider);
+            console.log(number);
+            objectID = number;
+            number = previous;
+
+            // Function displays the bird based on the index determined by random number.
+            function toggleVisibilityPlus(number) {
+                var visBird = document.getElementById(number);
+
+                if (visBird.style.display = "none") {
+                    visBird.style.display = "block"
+                } else {
+                    visBird.style.display = "none"
+                }
+                console.log(visBird);
+            }
+
+            // Calls toggleVisibility which shows bird
+            toggleVisibilityPlus(number);
+
+            // Hide, let's play
+            $('.letsplay').hide();
+            $('.newbird').show();
+
+            // Append Points container
+            var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
+            $('.buttonsHolder').prepend(pointsDisplay);
+        });
+
         $('.newbird').on("click", function () {
+            qnumber+=1;
 
             // Deletes the previously displayed bird object.  Previous is set at the end of on-click with the clicked id number.
             var prevBird = document.getElementById(previous);
@@ -110,6 +185,11 @@ function checkAnswer() {
             // Hide correct button
             $('.correct').remove();
             $('.wrong').remove();
+            $('.questions').remove();
+
+            // Display which question, out of how many that you are on
+            displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
+            $('.count').append(displayQuestions);
 
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
@@ -117,18 +197,6 @@ function checkAnswer() {
             console.log(number);
             objectID = number;
 
-            // Function displays the bird based on the index determined by random number.
-            function toggleVisibility(number) {
-                var visBird = document.getElementById(number);
-
-                if (visBird.style.display = "none") {
-                    visBird.style.display = "block"
-                } else {
-                    visBird.style.display = "none"
-                }
-
-                console.log(visBird);
-            }
 
             // Calls toggleVisibility which shows bird
             toggleVisibility(number);
@@ -136,15 +204,20 @@ function checkAnswer() {
             // Sets previous to be used when the next button is clicked again.
             previous = number;
 
-            // Identify correct answer
-            correctAnswer = birdData.recordings[objectID].en;
-            correctAnswer = correctAnswer.toLowerCase();
-            console.log(correctAnswer);
-
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
+            if (qnumber==10) {
+                var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
+                if (result == "yes") {
+                    location.reload();
+                } else {
+                    $('.container').hide();
+                    alert("Thanks for playing!");
+                }
+            }
         });
+
 
         //// Audio2 is to replace the listen button with an audio track, mayhaps
         //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
