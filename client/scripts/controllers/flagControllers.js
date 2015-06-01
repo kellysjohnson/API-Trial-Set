@@ -65,6 +65,10 @@ myApp.controller("UserLoginController", ['$scope', '$http', function ($scope, $h
         return $http.post('/add', player).then(fetchPlayers);
     };
 
+    $scope.remove = function(player){
+        return $http.post('/remove', player).then(fetchPlayers);
+    };
+
     fetchPlayers();
 
 }]);

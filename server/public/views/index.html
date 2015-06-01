@@ -50,7 +50,7 @@
                     </form>
                 <h3> Bird Watchers </h3>
                     <div class="playerlist">
-                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div></div></div>
+                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div><div class="btn btn-xs" ng-click="remove(player)">X</div></div></div>
                     </div>
                 </div>
     </div>

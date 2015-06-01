@@ -17,7 +17,7 @@ router.post('/add', function (req, res, next){
        if (err) console.log ('There is an error posting to /add', err);
        res.send(player.toJSON());
        next();
-   })
+   });
 });
 
 router.get('/players', function(req, res, next){
@@ -27,6 +27,15 @@ router.get('/players', function(req, res, next){
       next();
    });
 });
+
+
+router.post('/remove', function(req, res, next) {
+    var xplayer = Player.find({name: req.body.name});
+        xplayer.remove(function(error) {
+        if (error) console.log('Error when using router.post / remove', error);
+        });
+            next();
+    });
 
 router.get("/", function(req, res, next){
     res.sendFile(path.join(__dirname, '../public', 'views/index.html'));
