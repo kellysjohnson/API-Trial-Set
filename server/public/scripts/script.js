@@ -228,6 +228,7 @@ function toggleVisibility(number) {
         //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
         $('.specificflag').on("click", function(){
             $('.letsplay').show();
+            $('.nameentry').hide();
         });
 
         $('.appendHere').on("click", '.js-search', function () {

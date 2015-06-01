@@ -19,7 +19,7 @@
 
 </head>
 
-<body>
+<body ng-app="myApp">
 
 
 <div class="container">
@@ -30,7 +30,7 @@
         <p class="count"> Count to 3. 1,2,3 ...then click get a flock by picking on a country flag!</p>
 
         <div class="countries">
-            <div ng-app="myApp" ng-controller="FlagCtrl">
+            <div ng-controller="FlagCtrl">
                 <div class="flagdiv">
                     <div class="headerflag" ng-repeat="country in country">
                         <img class="specificflag {{country.code}}" ng-src="{{country.country}}">
@@ -40,7 +40,20 @@
                 <p class="underflagdiv"> Questions </p>
             </div>
         </div>
+    </div>
 
+    <div ng-controller="UserLoginController">
+                <div class=" nameentry col-sm-8 col-sm-offset-3">
+                    <!--<p ng-show="player.name"> Player: {{player.name}}</p>  No need to display player name.-->
+                    <form novalidate>
+                    New Player: <input type="text" ng-model="player.name"/><input type="submit" ng-click="add(player)" value="Save"/>
+                    </form>
+                <h3> Bird Watchers </h3>
+                    <div class="playerlist">
+                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div></div></div>
+                    </div>
+                </div>
+    </div>
         <!--<div class="col-md-offset-2">-->
             <!--<main ng-view></main>-->
         <!--</div>-->
@@ -65,8 +78,6 @@
 
     <!-- Users go here -->
 
-</div>
-
 
 <!--START SCRIPTS-->
             <script src="../stylesheets/jquery.min.js"></script>
@@ -75,6 +86,7 @@
             <script src="../vendor/angular-route/angular-route.min.js"></script>
             <script src="../scripts/script.js"></script>
             <script src="../scripts/controllers/flagControllers.min.js"></script>
+            <!--<script src="../scripts/controllers/loginController.min.js"></script>-->
 <!--END SCRIPTS-->
 </body>
 

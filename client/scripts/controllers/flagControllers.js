@@ -44,3 +44,27 @@ myApp.controller('FlagCtrl',['$scope', function($scope){
             code: 'germany'}
         ];
     }]);
+
+myApp.controller("UserLoginController", ['$scope', '$http', function ($scope, $http){
+    $scope.name = {};                                                           // Player name entry
+    $scope.players = [];                                                         // Player name added to database
+    // What about the points, how to get them there?
+    var fetchPlayers = function() {
+        return $http.get('/players').then(function(response){
+            if(response.status !== 200){
+                throw new Error('Failed to fetch players from the API');
+            }
+
+            $scope.name = {};
+            $scope.players = response.data;
+            return response.data;
+        })
+    };
+
+    $scope.add = function(player){
+        return $http.post('/add', player).then(fetchPlayers);
+    };
+
+    fetchPlayers();
+
+}]);
