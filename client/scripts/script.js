@@ -235,21 +235,22 @@ function toggleVisibility(number) {
             var choiceArray = shuffle(answerArray);
 
 
-            radioButtons =  '<form ="answerForm"><div class="circle"><div class="result">' + ' ' + choiceArray[0] + '</div></div><br/>' +
-                            '<input type="radio" name="option" value="second">' + ' ' + choiceArray[1] + '<br/>' +
-                            '<input type="radio" name="option" value="third">' + ' ' + choiceArray[2] + '<br/>' +
-                            '<input type="radio" name="option" value="fourth">' + ' ' + choiceArray[3] + '<br/>' +
-                            '<p input type="submit" value="submit"></p></form>';
+            radioButtons =  '<div ="answerForm"><div class="row"><div class="circle"></div><div class="result">' + choiceArray[0] + '</div></div>' +
+                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[1] + '</div></div>' +
+                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[2] + '</div></div>' +
+                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[3] + '</div></div>' +
+                            '</div>';
 
-            $('.eachSet').append(radioButtons);
+            $('.appendHere').append(radioButtons);
 
             // On click to get value of radio button, and at the same time disable the other radio buttons
-            $('.answerForm').on("click", '[name="option"]', function(){
+            $('.appendHere').on('click', '.circle', function(){
                     console.log("hi!!!!");
                 if (lastSelected != $(this).val() && typeof lastSelected != "undefined") {
                     lastSelected = $(this).val();
                     console.log(lastSelected);
                     $(this).siblings("input[type=radio]").attr('disabled','disabled');
+                    $(this).toggleClass('dos');
 
                     radioCheckAnswer();
                 }

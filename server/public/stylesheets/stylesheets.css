@@ -36,6 +36,23 @@ img {
     margin-left: 15px;
 }
 
+.circle {
+    height:15px;
+    width:15px;
+    background-color: #0074c7;
+    border-radius: 50%;
+}
+
+.dos {
+    height:25px;
+    width:25px;
+    background-color: white;
+    border-color: black;
+    border-width: 5px;
+    border-radius: 50%;
+}
+
+
 .countries {
     margin-left: 4px;
 }
