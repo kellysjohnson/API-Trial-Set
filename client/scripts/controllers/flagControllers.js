@@ -46,9 +46,9 @@ myApp.controller('FlagCtrl',['$scope', function($scope){
     }]);
 
 myApp.controller("UserLoginController", ['$scope', '$http', function ($scope, $http){
-    $scope.name = {};                                                           // Player name entry
+    $scope.name = {};                                                            // Player name entry
     $scope.players = [];                                                         // Player name added to database
-    // What about the points, how to get them there?
+                                                                                 // What about the points, how to get them there?
     var fetchPlayers = function() {
         return $http.get('/players').then(function(response){
             if(response.status !== 200){
@@ -70,5 +70,12 @@ myApp.controller("UserLoginController", ['$scope', '$http', function ($scope, $h
     };
 
     fetchPlayers();
+
+}]);
+
+
+myApp.controller('AnswerController',['$scope', function($scope){
+
+
 
 }]);

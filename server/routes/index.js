@@ -7,6 +7,29 @@ var objectData = require('./getData');
 
 var path = require('path');
 
+
+// Build newURL
+var domain = 'http://www.xeno-canto.org/api/2/recordings';
+var query = '?query=';
+var countryGeneric = 'cnt:';
+
+var unitedStates = 'united&%20states';
+
+
+// https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
+var options =  domain + query + countryGeneric + unitedStates;
+var jsonObject;
+
+
+
+// Take the GetData() module and put it into the index.js to write the entire URL on the client side, and then attempt to pass it back to the server
+function GetData(){
+    if (!this instanceof GetData){
+        return new GetData();
+    }
+}
+
+// Allow users to be added to the database, by post and get.
 mongoose.connect("mongodb://localhost/api_trial");
 
 var Player = mongoose.model('Player', {name: String, points: Number});
@@ -37,12 +60,17 @@ router.post('/remove', function(req, res, next) {
             next();
     });
 
+
+// Router for the project
 router.get("/", function(req, res, next){
     res.sendFile(path.join(__dirname, '../public', 'views/index.html'));
 });
 
+
+// router.get for the api call
 router.get("/apiBirds", function (req, res, next){
-    console.log('apiBirds called');
+    console.log('apiBirds called:' + req.query.country);
+    //req.body
     var birdData = new objectData();
     console.log('objectData created');
     birdData.go(function(data){
@@ -52,8 +80,16 @@ router.get("/apiBirds", function (req, res, next){
     });
 });
 
+
+////Is this a good idea???? Then export newURL to get data?????
+//router.post ('/infoNeeded', function (req, res, next){
+//    var newURL = domain + query + countryGeneric + req.query.country;
+//    res.send(newURL);
+//});
+
 console.log("Index.js ran");
 //console.log(objectData);
 
 module.exports = router;
+//module.exports.newURL = newURL;
 

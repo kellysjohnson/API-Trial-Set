@@ -25,7 +25,7 @@ img {
 }
 
 .reveal:hover {
-    font-size:16px;
+    font-size:11px;
     color:saddlebrown;
 }
 
@@ -54,7 +54,7 @@ img {
 }
 
 .addAnswers {
-    margin-left: 318px;
+    margin-left: 538px;
 }
 
 .letsplay {
@@ -70,6 +70,7 @@ img {
 
 .popup2 {
     color:white;
+    text-decoration: none;
 }
 
 .popup2:hover {

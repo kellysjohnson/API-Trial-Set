@@ -1,20 +1,21 @@
 // Hello!
 
-
-var domain = 'http://www.xeno-canto.org/api/2/recordings';
-var query = '?query=';
-var countryGeneric = 'cnt:';
-
-var unitiedStates = 'united&%20states';                    //United States now working.
-var france = 'france';
-
-var countryTest = domain + query + countryGeneric;
-var testUS = countryTest + unitiedStates;
-var testFrance = countryTest + france;                     //France works, but object not returned to console.
-
-var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil';  //Works, but object not returned to console.
-var i;
-var apiKey;
+//       ************* These Can Be Deleted ***************
+//var domain = 'http://www.xeno-canto.org/api/2/recordings';
+//var query = '?query=';
+//var countryGeneric = 'cnt:';
+//
+//var unitiedStates = 'united&%20states';                    //United States now working.
+//var france = 'france';
+//
+//var countryTest = domain + query + countryGeneric;
+//var testUS = countryTest + unitiedStates;
+//var testFrance = countryTest + france;                     //France works, but object not returned to console.
+//
+//var testGivenUrl = 'http://www.xeno-canto.org/api/2/recordings?query=cnt:brazil';  //Works, but object not returned to console.
+//var i;
+//var apiKey;
+//      ************* All are included in the API call, index.js **************
 
 var localRoute = '/apiBirds';
 
@@ -40,14 +41,42 @@ var numQs = 10;
 var sum = 0;
 var total = 10*numQs;
 var qnumber = 1;
+var totalforGame;
+var country = 'brazil';
 
 var displayQuestions;
+var radioButtons;
+var lastSelected;
+var n;                  //radio button, random array index.
+var o;                  //radio button, random array index.
+var p;                  //radio button, random array index.
 
 
-
+// Generate random number
 function randomNumber(min, max) {
     return Math.floor(Math.random() * (1 + max - min) + min);
 }
+
+// Shuffle array for answer choices
+function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex ;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+
+    return array;
+}
+
 
 //var birdName = data.recordings[i].en;
 //var photoAndCopyrightHTML = '<img class="photo" src=' + data.recordings[i].photo + '></div><div class="copyright">' + data.recordings[i].copyright +'</div>';
@@ -56,15 +85,20 @@ function dataDisplay(data){
     birdData = data;
     dataToAppend = '';
     someSpace = 12345678765432;
-    console.log(data.recordings.length);
+    var numLength = data.recordings.length;
+    console.log(numLength);
     for (i=0; i<data.recordings.length; i++){
         var num = i+1;
         var submitnum = i +1000;
         var listennum = i +2000;
 
+        n = randomNumber(0, numLength);
+        o = randomNumber(0, numLength);
+        p = randomNumber(0, numLength);
+
         var audio = data.recordings[i].file;
 
-        var ahrefListen = '<div class="btn btn-group-sm brown"><a ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
+        var ahrefListen = '<div class="btn btn-group-sm brown"><a target="blank" ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
         //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
@@ -73,10 +107,11 @@ function dataDisplay(data){
 
         dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
     }
+
     $('.appendHere').append(dataToAppend);
 }
 
-
+// This function is used to check the answer when the ANSWER USER INPUT BOX is being used.
 function checkAnswer() {
     searchElement = objectID + 1000;
     console.log(searchElement);
@@ -98,6 +133,37 @@ function checkAnswer() {
         console.log("Hi");
 
     // ASK SCOTT: Better way to update just the number of points earned??
+        $('.points').remove();
+        sum = sum +10;
+        if (sum >= 100){sum = 100}
+        var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
+        $('.buttonsHolder').prepend(pointsDisplay);
+
+    } else {
+        console.log("Nope!");
+        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X</div>';
+        $('.addAnswers').append(youreWrong);
+
+    }
+}
+
+// Function, check radio button for correct answer
+
+function radioCheckAnswer () {
+
+// Identify correct answer
+    correctAnswer = birdData.recordings[objectID].en;
+    correctAnswer = correctAnswer.toLowerCase();
+    console.log(correctAnswer);
+
+
+//   Test for correct answer
+    if (correctAnswer == lastSelected) {
+        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
+        $('.addAnswers').append(youreCorrect);
+        console.log("Hi");
+
+// ASK SCOTT: Better way to update just the number of points earned??  Joseph suggested - write answer, question num, points - all to the database
         $('.points').remove();
         sum = sum +10;
         if (sum >= 100){sum = 100}
@@ -148,6 +214,7 @@ function toggleVisibility(number) {
             objectID = number;
             number = previous;
 
+
             // Function displays the bird based on the index determined by random number.
             function toggleVisibilityPlus(number) {
                 var visBird = document.getElementById(number);
@@ -159,6 +226,35 @@ function toggleVisibility(number) {
                 }
                 console.log(visBird);
             }
+
+
+            // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
+            answerArray = [birdData.recordings[number].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            console.log(correctAnswer);
+
+            var choiceArray = shuffle(answerArray);
+
+
+            radioButtons =  '<form ="answerForm"><div class="circle"><div class="result">' + ' ' + choiceArray[0] + '</div></div><br/>' +
+                            '<input type="radio" name="option" value="second">' + ' ' + choiceArray[1] + '<br/>' +
+                            '<input type="radio" name="option" value="third">' + ' ' + choiceArray[2] + '<br/>' +
+                            '<input type="radio" name="option" value="fourth">' + ' ' + choiceArray[3] + '<br/>' +
+                            '<p input type="submit" value="submit"></p></form>';
+
+            $('.eachSet').append(radioButtons);
+
+            // On click to get value of radio button, and at the same time disable the other radio buttons
+            $('.answerForm').on("click", '[name="option"]', function(){
+                    console.log("hi!!!!");
+                if (lastSelected != $(this).val() && typeof lastSelected != "undefined") {
+                    lastSelected = $(this).val();
+                    console.log(lastSelected);
+                    $(this).siblings("input[type=radio]").attr('disabled','disabled');
+
+                    radioCheckAnswer();
+                }
+            });
+
 
             // Calls toggleVisibility which shows bird
             toggleVisibilityPlus(number);
@@ -181,13 +277,13 @@ function toggleVisibility(number) {
                 prevBird.style.display = "none"
             }
 
-            // Re-able the "Submit" button
-            $('.js-search').attr("disabled", false);
+                // Re-able the "Submit" button
+                $('.js-search').attr("disabled", false);
 
-            // Hide correct button
-            $('.correct').remove();
-            $('.wrong').remove();
-            $('.questions').remove();
+                // Hide correct button
+                $('.correct').remove();
+                $('.wrong').remove();
+                $('.questions').remove();
 
             // Display which question, out of how many that you are on
             displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
@@ -196,12 +292,12 @@ function toggleVisibility(number) {
             } else {
                 $('.flagdiv').append(displayQuestions);
             }
+
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
             number = randomNumber(0, ider);
             console.log(number);
             objectID = number;
-
 
             // Calls toggleVisibility which shows bird
             toggleVisibility(number);
@@ -212,24 +308,28 @@ function toggleVisibility(number) {
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
-            if (qnumber>=10) {
-                var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
-                if (result == "yes") {
+            if (qnumber>10) {
+                //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
+                //if (result == "yes") {
+                    totalforGame = sum;
+
+                    var $scope = angular.element($('.points')).scope();
+                    $scope.$apply(function(){
+                       $scope.player = Player.find({},"name").update("points", {points: sum});
+                    });
+
                     location.reload();
-                } else {
-                    $('.container').hide();
-                    alert("Thanks for playing!");
-                }
+                //} else {
+                //    $('.container').hide();
+                //    alert("Thanks for playing!");
+                //}
             }
         });
 
 
         //// Audio2 is to replace the listen button with an audio track, mayhaps
         //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
-        $('.specificflag').on("click", function(){
-            $('.letsplay').show();
-            $('.nameentry').hide();
-        });
+
 
         $('.appendHere').on("click", '.js-search', function () {
 
@@ -367,11 +467,22 @@ function toggleVisibility(number) {
 //        });
 
 
-// ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
+        //Moving the ajax call into the flag on click so that the api call is made after the on click occurs.  Need to send 'country' back to server
+        // I learned I can send it when it is part of the url
+
+        // For example, 'localRoute + '/' + country,  = apiBirds/united&%20states
+
+        $('.headerflag').on("click", ".specificflag", function() {
+            $('.letsplay').show();
+            $('.nameentry').hide();
+            console.log("I clicked a flag....");
+            var country = $(this).attr('id');
+            console.log(country);
+
+            // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
             $.ajax({
                 type: 'GET',
                 url: localRoute,
-                dataType: 'json',
                 jsonCallback: 'callback',
                 crossDomain: true,
                 success: function (data) {
@@ -386,5 +497,21 @@ function toggleVisibility(number) {
                 }
             });
 
+            //$.ajax({
+            //    type: 'POST',
+            //    url:'/infoNeeded',
+            //    data: {name: country},
+            //    dataType: 'json',
+            //    success: function(){
+            //        console.log('I passed the country' + country + 'to the server');
+            //    },
+            //    complete: console.log("I did a post"),
+            //    error: function (xhr){
+            //        console.log("Well, it was a Hail Mary anyway!")
+            //    }
+            //});
+
         });
+
+    });
 

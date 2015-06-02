@@ -1,16 +1,19 @@
 var express = require('express');
 var router = express.Router();
 var http = require('http');
+var newURL = require('./index');
 
 var domain = 'http://www.xeno-canto.org/api/2/recordings';
 var query = '?query=';
 var countryGeneric = 'cnt:';
 
-var unitiedStates = 'united&%20states';
+var unitedStates = 'united&%20states';
+
+var country = 'france';
 
 
 // https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
-var options =  domain + query + countryGeneric + unitiedStates;
+var options =  domain + query + countryGeneric + country;
 var jsonObject;
 
 
@@ -23,6 +26,8 @@ function GetData(){
 }
 
 GetData.prototype.go = function(callback) {
+
+    //options = domain + query + countryGeneric + country;
 
     var request = http.request(options, function (response) {
         jsonObject = '';                                            //define jsonObject as a string so as to not have the data return "[Object, object]"
