@@ -74,8 +74,7 @@ myApp.controller("UserLoginController", ['$scope', '$http', function ($scope, $h
 }]);
 
 
-myApp.controller('AnswerController',['$scope', function($scope){
-
-
-
-}]);
+//myApp.controller('AnswerController',['$scope', function($scope){
+//    $scope.answer = ;
+//
+//}]);

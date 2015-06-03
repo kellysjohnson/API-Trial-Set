@@ -39,19 +39,22 @@ img {
 .circle {
     height:15px;
     width:15px;
-    background-color: #0074c7;
+    background-color:rgba(44, 168, 208, 0.85);
     border-radius: 50%;
 }
 
 .dos {
-    height:25px;
-    width:25px;
-    background-color: white;
-    border-color: black;
-    border-width: 5px;
+    height:15px;
+    width:15px;
+    background-color: gray;
     border-radius: 50%;
 }
 
+.plusten {
+    background-color: yellow;
+    border-color: #8a6d3b;
+    color: darkred;
+}
 
 .countries {
     margin-left: 4px;
@@ -62,8 +65,24 @@ img {
     display: none;
 }
 
+.hold1,.hold2,.hold3,.hold4 {
+    display: inline;
+}
+
 .newbird {
     margin-left: 2px;
+}
+
+.radioButtons {
+    margin-top:20px;
+}
+
+.radioButtons:hover {
+    color:black;
+}
+
+.answerForm {
+    display: inline-block;
 }
 
 .recording {

@@ -23,6 +23,7 @@ var birdData;
 var dataToAppend;
 var someSpace;
 var previous = 1;
+var newbirdnumber;
 
 var answerArray = [];
 var number;
@@ -30,6 +31,7 @@ var objectID;
 var correctAnswer;
 var youreCorrect;
 var youreWrong;
+var choice;
 
 var element;
 var searchElement;
@@ -46,6 +48,7 @@ var country = 'brazil';
 
 var displayQuestions;
 var radioButtons;
+var radioAns;
 var lastSelected;
 var n;                  //radio button, random array index.
 var o;                  //radio button, random array index.
@@ -149,7 +152,7 @@ function checkAnswer() {
 
 // Function, check radio button for correct answer
 
-function radioCheckAnswer () {
+function radioCheckAnswer (radio) {
 
 // Identify correct answer
     correctAnswer = birdData.recordings[objectID].en;
@@ -158,23 +161,30 @@ function radioCheckAnswer () {
 
 
 //   Test for correct answer
-    if (correctAnswer == lastSelected) {
+    console.log("The correct answer is:" + correctAnswer);
+    console.log("The selected answer is:" + radio);
+    if (correctAnswer == radio) {
         youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
         $('.addAnswers').append(youreCorrect);
         console.log("Hi");
+
 
 // ASK SCOTT: Better way to update just the number of points earned??  Joseph suggested - write answer, question num, points - all to the database
         $('.points').remove();
         sum = sum +10;
         if (sum >= 100){sum = 100}
+
+        var addpoints = '<div class="plusten"> +10 </div>';
+        $('.appendOtherColumn').append(addpoints).fadeIn(1000);
+
         var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
         $('.buttonsHolder').prepend(pointsDisplay);
 
     } else {
         console.log("Nope!");
-        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X</div>';
+        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X Try Again</div>';
         $('.addAnswers').append(youreWrong);
-
+        return false
     }
 }
 
@@ -195,24 +205,24 @@ function toggleVisibility(number) {
 
     $(document).ready(function() {
 
-// Poor mans version, to just copy past the json data into this file, and get object elements.
-//        $.get('25MayDataUS.json', function(data) {
-//            birdData = data;
-//            console.log(".get json data works");
-//            console.log((birdData.recordings.length));
+ //Poor mans version, to just copy past the json data into this file, and get object elements.
+        $.get('25MayDataUS.json', function(data) {
+            birdData = data;
+            console.log(".get json data works");
+            console.log((birdData.recordings.length));
+
+            dataDisplay(data);
+            //var aRecording = data.recordings[0].en;
+            //alert(aRecording);
+        });
 //
-//            dataDisplay(data);
-//            //var aRecording = data.recordings[0].en;
-//            //alert(aRecording);
-//        });
-//
-        $('.letsplay').on("click", function(){
+        $('.letsplay').on("click", function () {
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
             number = randomNumber(0, ider);
-            console.log(number);
+            console.log('Random number for letsplay' + number);
             objectID = number;
-            number = previous;
+            previous = number;
 
 
             // Function displays the bird based on the index determined by random number.
@@ -224,38 +234,52 @@ function toggleVisibility(number) {
                 } else {
                     visBird.style.display = "none"
                 }
-                console.log(visBird);
+                console.log('visBird is the element by Id for number' + visBird);
             }
 
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-            answerArray = [birdData.recordings[number].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
-            console.log(correctAnswer);
+            answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
             var choiceArray = shuffle(answerArray);
 
 
-            radioButtons =  '<div ="answerForm"><div class="row"><div class="circle"></div><div class="result">' + choiceArray[0] + '</div></div>' +
-                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[1] + '</div></div>' +
-                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[2] + '</div></div>' +
-                            '<div class="row"><div class="circle"></div><div class="result">' + choiceArray[3] + '</div></div>' +
-                            '</div>';
+            radioButtons =  '<div class="answerForm"><div class="radio" id="first">' + choiceArray[0] + '</div><br/>' +
+                             '<div class="radio" id="second">'  + choiceArray[1] + '</div><br/>' +
+                             '<div class="radio" id="third">' + choiceArray[2] + '</div><br/>' +
+                            '<div class="radio" id="fourth">' + choiceArray[3] + '</div><br/>' +
+                             '</div>';
 
-            $('.appendHere').append(radioButtons);
+            //radioButtons = '<div class="radios"><input type="radio" name="rGroup" value="1" id="r1" checked="checked" /><label class="radio" for="r1">' + choiceArray[0] + '</label>'
+            //+ '<input type="radio" name="rGroup" value="2" id="r2" /><label class="radio" for="r2">' + choiceArray[1] +'</label>'
+            //+ '<input type="radio" name="rGroup" value="3" id="r3" /><label class="radio" for="r3">'+ choiceArray[2] +'</label>'
+            //+ '<input type="radio" name="rGroup" value="4" id="r4" /><label class="radio" for="r4">'+ choiceArray[3] +'</label></div>';
 
-            // On click to get value of radio button, and at the same time disable the other radio buttons
-            $('.appendHere').on('click', '.circle', function(){
-                    console.log("hi!!!!");
-                if (lastSelected != $(this).val() && typeof lastSelected != "undefined") {
-                    lastSelected = $(this).val();
-                    console.log(lastSelected);
-                    $(this).siblings("input[type=radio]").attr('disabled','disabled');
-                    $(this).toggleClass('dos');
+            $('.appendOtherColumn').append(radioButtons);
 
-                    radioCheckAnswer();
-                }
-            });
+                           // On click to get value of radio button, and at the same time disable the other radio buttons
+                            $('.appendOtherColumn').on("click", 'radio', function(){
+                                console.log("hi!!!!");
 
+                                choice = $('.radio').val();
+                                choice = choice.toLowerCase();
+                                console.log(choice);
+
+                                //if (name== 'first') {
+                                //    case 'first': choice = choiceArray[0]
+                                //    case 'second': choice = choiceArray[1]
+                                //    case 'third': choice = choiceArray[2]
+                                //    case 'fourth': choice = choiceArray[3]
+                                //    default: alert("Use user text input field!");
+
+                                         //if (lastSelected != $(this).val() && typeof lastSelected != "undefined") {
+                                         //       lastSelected = $(this).val();
+                                         //       console.log(lastSelected);
+                                         //       $(this).siblings("input[type=radio]").attr('disabled','disabled');
+
+                                                    radioCheckAnswer(value);
+                            });
 
             // Calls toggleVisibility which shows bird
             toggleVisibilityPlus(number);
@@ -265,12 +289,12 @@ function toggleVisibility(number) {
             $('.newbird').show();
 
             // Append Points container
-            var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
+            var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' + total + '</div>';
             $('.buttonsHolder').prepend(pointsDisplay);
         });
 
         $('.newbird').on("click", function () {
-            qnumber+=1;
+            qnumber += 1;
 
             // Deletes the previously displayed bird object.  Previous is set at the end of on-click with the clicked id number.
             var prevBird = document.getElementById(previous);
@@ -278,17 +302,18 @@ function toggleVisibility(number) {
                 prevBird.style.display = "none"
             }
 
-                // Re-able the "Submit" button
-                $('.js-search').attr("disabled", false);
+            // Re-able the "Submit" button
+            $('.js-search').attr("disabled", false);
 
-                // Hide correct button
-                $('.correct').remove();
-                $('.wrong').remove();
-                $('.questions').remove();
+            // Hide correct button
+            $('.correct').remove();
+            $('.wrong').remove();
+            $('.questions').remove();
+            $('.radioButtons').remove();
 
             // Display which question, out of how many that you are on
             displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
-            if (qnumber==2) {
+            if (qnumber == 2) {
                 $('.underflagdiv').replaceWith(displayQuestions);
             } else {
                 $('.flagdiv').append(displayQuestions);
@@ -296,65 +321,104 @@ function toggleVisibility(number) {
 
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
-            number = randomNumber(0, ider);
-            console.log(number);
-            objectID = number;
+            newbirdnumber = randomNumber(0, ider);
+            console.log(newbirdnumber);
+            objectID = newbirdnumber;
 
             // Calls toggleVisibility which shows bird
-            toggleVisibility(number);
+            toggleVisibility(newbirdnumber);
 
             // Sets previous to be used when the next button is clicked again.
-            previous = number;
+            previous = newbirdnumber;
 
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
-            if (qnumber>10) {
-                //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
-                //if (result == "yes") {
+
+            // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
+            answerArray = [birdData.recordings[newbirdnumber].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            correctAnswer = birdData.recordings[newbirdnumber].en;
+
+            var choiceArray = shuffle(answerArray);
+
+
+            radioButtons = '<div class ="answerForm"><div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>' +
+            '</div>';
+
+            $('.appendOtherColumn').append(radioButtons);
+
+            // On click to get value of radio button, and at the same time disable the other radio buttons
+            $('.appendOtherColumn').on('click', '.circle', function () {
+                choice = $('.circle').attr('id');
+                $(this).toggleClass('dos');
+                if (choice == 9996) {
+                    radioAns = choiceArray[0];
+                } else if (choice == 9997) {
+                    radioAns = choiceArray[1];
+                } else if (choice == 9998) {
+                    radioAns = choiceArray[2];
+                } else {
+                    radioAns = choiceArray[3];
+                }
+
+                radioAns = radioAns.toLowerCase();
+                console.log('This is the selected choice' + radioAns);
+
+                console.log(correctAnswer);
+
+                    radioCheckAnswer(radioAns);
+
+            });
+
+                if (qnumber > 10) {
+                    //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
+                    //if (result == "yes") {
                     totalforGame = sum;
 
                     var $scope = angular.element($('.points')).scope();
-                    $scope.$apply(function(){
-                       $scope.player = Player.find({},"name").update("points", {points: sum});
+                    $scope.$apply(function () {
+                        $scope.player = Player.find({}, "name").update("points", {points: sum});
                     });
 
                     location.reload();
-                //} else {
-                //    $('.container').hide();
-                //    alert("Thanks for playing!");
-                //}
-            }
-        });
+                    //} else {
+                    //    $('.container').hide();
+                    //    alert("Thanks for playing!");
+                    //}
+                }
+            });
 
 
-        //// Audio2 is to replace the listen button with an audio track, mayhaps
-        //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
+            //// Audio2 is to replace the listen button with an audio track, mayhaps
+            //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
 
 
-        $('.appendHere').on("click", '.js-search', function () {
+            $('.appendHere').on("click", '.js-search', function () {
 
-            //Hide previous answers
-            $('.correct').remove();
-            $('.wrong').remove();
+                //Hide previous answers
+                $('.correct').remove();
+                $('.wrong').remove();
 
-            checkAnswer();
+                checkAnswer();
 
-            //Try to disable the search button so that only one click can occur per answer
-            $(this).attr("disabled", true);
-        });
+                //Try to disable the search button so that only one click can occur per answer
+                $(this).attr("disabled", true);
+            });
 
-        // TO DO: Need to resolve HOW to get KEYPRESS to work
-        //var keycode;
-        //
-        //$('.appendHere').keyup('#submitnum', function (event) {
-        //    keycode = (event.keyCode ? event.keyCode : event.which);
-        //    if (keyCode == 13) {
-        //        console.log("hi")
-        //        checkAnswer();
-        //    }
-        //});
-        // ************************************************* KEYPRESS
+            // TO DO: Need to resolve HOW to get KEYPRESS to work
+            //var keycode;
+            //
+            //$('.appendHere').keyup('#submitnum', function (event) {
+            //    keycode = (event.keyCode ? event.keyCode : event.which);
+            //    if (keyCode == 13) {
+            //        console.log("hi")
+            //        checkAnswer();
+            //    }
+            //});
+            // ************************************************* KEYPRESS
 
 
 // Try to create a pop up window so that the audio file will display in pop up window.
@@ -403,52 +467,50 @@ function toggleVisibility(number) {
 //        });
 
 
-
-
             ////comment out appController using Angular because that does NOT seem to be working.
-        //var myApp = angular.module('bird.song.audio', ['ngRoute', 'ui.bootstrap']);
-        //var myAppController = myApp.controller('ModalBSCtrl', function ($scope, $modal, $log) {
-        //
-        //
-        //    $scope.items = [activeLink];
-        //
-        //    $scope.animationsEnabled = true;
-        //
-        //    $scope.open = function (size) {
-        //
-        //        var modalInstance = $modal.open({
-        //            animation: $scope.animationsEnabled,
-        //            controller: 'ModalInstanceCtrl',
-        //            size: size,
-        //            resolve: {
-        //                items: function () {
-        //                    return $scope.items;
-        //                }
-        //            }
-        //        });
-        //
-        //        $scope.toggleAnimation = function () {
-        //            $scope.animationsEnabled = !$scope.animationsEnabled;
-        //        };
-        //
-        //    };
-        //
-        //    angular.module('bird.song.audio').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-        //
-        //        $scope.items = items;
-        //        $scope.selected = {
-        //            item: $scope.items[0]
-        //        };
-        //
-        //        $scope.ok = function () {
-        //            $modalInstance.close($scope.selected.item);
-        //        };
-        //
-        //        $scope.cancel = function () {
-        //            $modalInstance.dismiss('cancel');
-        //        };
-        //    });
-        // });
+            //var myApp = angular.module('bird.song.audio', ['ngRoute', 'ui.bootstrap']);
+            //var myAppController = myApp.controller('ModalBSCtrl', function ($scope, $modal, $log) {
+            //
+            //
+            //    $scope.items = [activeLink];
+            //
+            //    $scope.animationsEnabled = true;
+            //
+            //    $scope.open = function (size) {
+            //
+            //        var modalInstance = $modal.open({
+            //            animation: $scope.animationsEnabled,
+            //            controller: 'ModalInstanceCtrl',
+            //            size: size,
+            //            resolve: {
+            //                items: function () {
+            //                    return $scope.items;
+            //                }
+            //            }
+            //        });
+            //
+            //        $scope.toggleAnimation = function () {
+            //            $scope.animationsEnabled = !$scope.animationsEnabled;
+            //        };
+            //
+            //    };
+            //
+            //    angular.module('bird.song.audio').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+            //
+            //        $scope.items = items;
+            //        $scope.selected = {
+            //            item: $scope.items[0]
+            //        };
+            //
+            //        $scope.ok = function () {
+            //            $modalInstance.close($scope.selected.item);
+            //        };
+            //
+            //        $scope.cancel = function () {
+            //            $modalInstance.dismiss('cancel');
+            //        };
+            //    });
+            // });
 
 
 //            //Then need to create 4 radio buttons
@@ -468,51 +530,50 @@ function toggleVisibility(number) {
 //        });
 
 
-        //Moving the ajax call into the flag on click so that the api call is made after the on click occurs.  Need to send 'country' back to server
-        // I learned I can send it when it is part of the url
+            //Moving the ajax call into the flag on click so that the api call is made after the on click occurs.  Need to send 'country' back to server
+            // I learned I can send it when it is part of the url
 
-        // For example, 'localRoute + '/' + country,  = apiBirds/united&%20states
+            // For example, 'localRoute + '/' + country,  = apiBirds/united&%20states
+//**************************************************************************************************************************************************//
+            $('.headerflag').on("click", ".specificflag", function () {
+                $('.letsplay').show();
+                $('.nameentry').hide();
+                console.log("I clicked a flag....");
+                var country = $(this).attr('id');
+                console.log(country);
 
-        $('.headerflag').on("click", ".specificflag", function() {
-            $('.letsplay').show();
-            $('.nameentry').hide();
-            console.log("I clicked a flag....");
-            var country = $(this).attr('id');
-            console.log(country);
-
-            // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
-            $.ajax({
-                type: 'GET',
-                url: localRoute,
-                jsonCallback: 'callback',
-                crossDomain: true,
-                success: function (data) {
-                    console.log(data);
-                    dataDisplay(data);
-                    console.log("I work")
-                },
-                complete: console.log("Finished ajax call"),
-                error: function (xhr) {
-                    console.log('Danger Will Robinson, danger!');
-                    console.log(xhr);
-                }
             });
+            //    // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
+            //    $.ajax({
+            //        type: 'GET',
+            //        url: localRoute,
+            //        jsonCallback: 'callback',
+            //        crossDomain: true,
+            //        success: function (data) {
+            //            console.log(data);
+            //            dataDisplay(data);
+            //            console.log("I work")
+            //        },
+            //        complete: console.log("Finished ajax call"),
+            //        error: function (xhr) {
+            //            console.log('Danger Will Robinson, danger!');
+            //            console.log(xhr);
+            //        }
+            //    });
+//**************************************************************************************************************************************************//
+                //$.ajax({
+                //    type: 'POST',
+                //    url:'/infoNeeded',
+                //    data: {name: country},
+                //    dataType: 'json',
+                //    success: function(){
+                //        console.log('I passed the country' + country + 'to the server');
+                //    },
+                //    complete: console.log("I did a post"),
+                //    error: function (xhr){
+                //        console.log("Well, it was a Hail Mary anyway!")
+                //    }
+                //});
 
-            //$.ajax({
-            //    type: 'POST',
-            //    url:'/infoNeeded',
-            //    data: {name: country},
-            //    dataType: 'json',
-            //    success: function(){
-            //        console.log('I passed the country' + country + 'to the server');
-            //    },
-            //    complete: console.log("I did a post"),
-            //    error: function (xhr){
-            //        console.log("Well, it was a Hail Mary anyway!")
-            //    }
-            //});
-
-        });
-
+        //});
     });
-
