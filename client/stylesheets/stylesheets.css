@@ -51,6 +51,7 @@ img {
 }
 
 .plusten {
+    width: 25px;
     background-color: yellow;
     border-color: #8a6d3b;
     color: darkred;
@@ -82,7 +83,7 @@ img {
 }
 
 .answerForm {
-    display: inline-block;
+    display: inline-table;
 }
 
 .recording {
@@ -97,7 +98,7 @@ img {
     margin-left: 420px;
     background-color: darkseagreen;
     border-radius: 5px;
-    border-width: 3px;
+    border-width: 1px;
     border-color: #8a6d3b;
     color: #8a6d3b;
     padding-left: 10px;
@@ -116,11 +117,11 @@ img {
 
 .points {
     margin-left: 420px;
-    background-color: darkseagreen;
+    background-color: white;
     border-radius: 5px;
-    border-width: 3px;
+    border-width: 1px;
     border-color: #8a6d3b;
-    color: white;
+    color: darkseagreen;
     padding-left: 10px;
 }
 
@@ -133,10 +134,18 @@ img {
     display:block;
 }
 
+.giveAnswer {
+    background-color: darkseagreen;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #8a6d3b;
+    color: white;
+}
+
 .submit {
     background-color: darkseagreen;
     border-radius: 5px;
-    border-width: 3px;
+    border-width: 1px;
     border-color: #8a6d3b;
     color: white;
     margin-left: 2px;

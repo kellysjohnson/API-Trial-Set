@@ -26,6 +26,8 @@ var previous = 1;
 var newbirdnumber;
 
 var answerArray = [];
+var letsanswerArray = [];
+
 var number;
 var objectID;
 var correctAnswer;
@@ -48,8 +50,10 @@ var country = 'brazil';
 
 var displayQuestions;
 var radioButtons;
+var previousradioAnswer;
 var radioAns;
-var lastSelected;
+var answerFormDiv;
+
 var n;                  //radio button, random array index.
 var o;                  //radio button, random array index.
 var p;                  //radio button, random array index.
@@ -165,6 +169,7 @@ function radioCheckAnswer (radio) {
     console.log("The selected answer is:" + radio);
     if (correctAnswer == radio) {
         youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
+        $('.correct').remove();
         $('.addAnswers').append(youreCorrect);
         console.log("Hi");
 
@@ -175,16 +180,25 @@ function radioCheckAnswer (radio) {
         if (sum >= 100){sum = 100}
 
         var addpoints = '<div class="plusten"> +10 </div>';
-        $('.appendOtherColumn').append(addpoints).fadeIn(1000);
+        $('.plusten').remove();
+        $('.appendOtherColumn').prepend(addpoints).fadeIn(1000);
 
         var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
         $('.buttonsHolder').prepend(pointsDisplay);
 
+
+        // Storing previous answer so that the multiple appends of wrong can be eliminated.
+        previousradioAnswer = correctAnswer;
+
+        // Have to adjust so that You're Wrong only appends one time, when the incorrect answer is clicked, and not 8 times if 'New Bird' is clicked 8 times'
     } else {
         console.log("Nope!");
-        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X Try Again</div>';
+        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X Try Another New Bird</div>';
+        $('.wrong').remove();
         $('.addAnswers').append(youreWrong);
-        return false
+        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + correctAnswer + '</div>';
+        $('.giveAnswer').remove();
+        $('.answerForm').prepend(theAnswerIs);
     }
 }
 
@@ -201,10 +215,20 @@ function toggleVisibility(number) {
     console.log(visBird);
 }
 
+// Function displays the bird based on the index determined by random number.
+function toggleVisibilityPlus(number) {
+    var visBird = document.getElementById(number);
+
+    if (visBird.style.display = "none") {
+        visBird.style.display = "block"
+    } else {
+        visBird.style.display = "none"
+    }
+    console.log('visBird is the element by Id for number' + visBird);
+}
 
 
     $(document).ready(function() {
-
  //Poor mans version, to just copy past the json data into this file, and get object elements.
         $.get('25MayDataUS.json', function(data) {
             birdData = data;
@@ -216,70 +240,55 @@ function toggleVisibility(number) {
             //alert(aRecording);
         });
 //
+
         $('.letsplay').on("click", function () {
             // Using the length of the array provided, a bird object is randomly selected
+
             var ider = birdData.recordings.length - 1;
-            number = randomNumber(0, ider);
+                number = randomNumber(0, ider);
+
             console.log('Random number for letsplay' + number);
-            objectID = number;
-            previous = number;
 
-
-            // Function displays the bird based on the index determined by random number.
-            function toggleVisibilityPlus(number) {
-                var visBird = document.getElementById(number);
-
-                if (visBird.style.display = "none") {
-                    visBird.style.display = "block"
-                } else {
-                    visBird.style.display = "none"
-                }
-                console.log('visBird is the element by Id for number' + visBird);
-            }
-
+                objectID = number;
+                previous = number;
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-            answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+                letsanswerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
-            var choiceArray = shuffle(answerArray);
+            var letschoiceArray = shuffle(letsanswerArray);
 
+            answerFormDiv = '<div class ="answerForm"></div>'
 
-            radioButtons =  '<div class="answerForm"><div class="radio" id="first">' + choiceArray[0] + '</div><br/>' +
-                             '<div class="radio" id="second">'  + choiceArray[1] + '</div><br/>' +
-                             '<div class="radio" id="third">' + choiceArray[2] + '</div><br/>' +
-                            '<div class="radio" id="fourth">' + choiceArray[3] + '</div><br/>' +
-                             '</div>';
+            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + letschoiceArray[0] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9997"></div><div class="result">' + letschoiceArray[1] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9998"></div><div class="result">' + letschoiceArray[2] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + letschoiceArray[3] + '</div></div></div>';
 
-            //radioButtons = '<div class="radios"><input type="radio" name="rGroup" value="1" id="r1" checked="checked" /><label class="radio" for="r1">' + choiceArray[0] + '</label>'
-            //+ '<input type="radio" name="rGroup" value="2" id="r2" /><label class="radio" for="r2">' + choiceArray[1] +'</label>'
-            //+ '<input type="radio" name="rGroup" value="3" id="r3" /><label class="radio" for="r3">'+ choiceArray[2] +'</label>'
-            //+ '<input type="radio" name="rGroup" value="4" id="r4" /><label class="radio" for="r4">'+ choiceArray[3] +'</label></div>';
+            $('.appendOtherColumn').append(answerFormDiv);
+            $('.answerForm').append(radioButtons);
 
-            $('.appendOtherColumn').append(radioButtons);
+            // On click to get value of radio button, and at the same time disable the other radio buttons
+            $('.appendOtherColumn').on('click', '.circle', function () {
+                choice = $('.circle').attr('id');
+                $(this).toggleClass('dos');
+                if (choice == 9996) {
+                    radioAns = letschoiceArray[0];
+                } else if (choice == 9997) {
+                    radioAns = letschoiceArray[1];
+                } else if (choice == 9998) {
+                    radioAns = letschoiceArray[2];
+                } else if (choice == 9999) {
+                    radioAns = letschoiceArray[3];
+                }
 
-                           // On click to get value of radio button, and at the same time disable the other radio buttons
-                            $('.appendOtherColumn').on("click", 'radio', function(){
-                                console.log("hi!!!!");
+                radioAns = radioAns.toLowerCase();
+                console.log('This is the selected choice' + radioAns);
 
-                                choice = $('.radio').val();
-                                choice = choice.toLowerCase();
-                                console.log(choice);
+                radioCheckAnswer(radioAns);
 
-                                //if (name== 'first') {
-                                //    case 'first': choice = choiceArray[0]
-                                //    case 'second': choice = choiceArray[1]
-                                //    case 'third': choice = choiceArray[2]
-                                //    case 'fourth': choice = choiceArray[3]
-                                //    default: alert("Use user text input field!");
-
-                                         //if (lastSelected != $(this).val() && typeof lastSelected != "undefined") {
-                                         //       lastSelected = $(this).val();
-                                         //       console.log(lastSelected);
-                                         //       $(this).siblings("input[type=radio]").attr('disabled','disabled');
-
-                                                    radioCheckAnswer(value);
-                            });
+            });
 
             // Calls toggleVisibility which shows bird
             toggleVisibilityPlus(number);
@@ -306,10 +315,12 @@ function toggleVisibility(number) {
             $('.js-search').attr("disabled", false);
 
             // Hide correct button
+            $('.answerForm').remove();
             $('.correct').remove();
             $('.wrong').remove();
             $('.questions').remove();
-            $('.radioButtons').remove();
+            $('.plusten').remove();
+
 
             // Display which question, out of how many that you are on
             displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
@@ -342,13 +353,15 @@ function toggleVisibility(number) {
             var choiceArray = shuffle(answerArray);
 
 
-            radioButtons = '<div class ="answerForm"><div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
+            answerFormDiv = '<div class ="answerForm"></div>';
+
+            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
-            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>' +
-            '</div>';
+            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>';
 
-            $('.appendOtherColumn').append(radioButtons);
+            $('.appendOtherColumn').append(answerFormDiv);
+            $('.answerForm').append(radioButtons);
 
             // On click to get value of radio button, and at the same time disable the other radio buttons
             $('.appendOtherColumn').on('click', '.circle', function () {
@@ -360,7 +373,7 @@ function toggleVisibility(number) {
                     radioAns = choiceArray[1];
                 } else if (choice == 9998) {
                     radioAns = choiceArray[2];
-                } else {
+                } else if (choice == 9999) {
                     radioAns = choiceArray[3];
                 }
 
