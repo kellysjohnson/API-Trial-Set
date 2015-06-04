@@ -26,7 +26,7 @@ var previous = 1;
 var newbirdnumber;
 
 var answerArray = [];
-var letsanswerArray = [];
+var choiceArray = [];
 
 var number;
 var objectID;
@@ -253,7 +253,7 @@ function toggleVisibilityPlus(number) {
                 previous = number;
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-                letsanswerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+                answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
@@ -264,14 +264,14 @@ function toggleVisibilityPlus(number) {
             // Calls toggleVisibility which shows bird
             toggleVisibilityPlus(number);
 
-            var letschoiceArray = shuffle(letsanswerArray);
+            choiceArray = shuffle(answerArray);
 
             answerFormDiv = '<div class ="answerForm"></div>'
 
-            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + letschoiceArray[0] + '</div></div></div>' +
-            '<div class="row"><div class="circle" id="9997"></div><div class="result">' + letschoiceArray[1] + '</div></div></div>' +
-            '<div class="row"><div class="circle" id="9998"></div><div class="result">' + letschoiceArray[2] + '</div></div></div>' +
-            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + letschoiceArray[3] + '</div></div></div>';
+            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
+            '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>';
 
             $('.appendOtherColumn').append(answerFormDiv);
             $('.answerForm').append(radioButtons);
@@ -280,19 +280,19 @@ function toggleVisibilityPlus(number) {
 
         // On click to get value of radio button, and at the same time disable the other radio buttons
         $('.appendOtherColumn').on('click', '.circle', function () {
-            choice = $('.circle').attr('id');
+            choice = $(this).attr('id');
             console.log(choice);
             $(this).toggleClass('dos');
 
             function choiceIs (choice) {
                 if (choice == 9996) {
-                    radioAns = letschoiceArray[0];
+                    radioAns = choiceArray[0];
                 } else if (choice == 9997) {
-                    radioAns = letschoiceArray[1];
+                    radioAns = choiceArray[1];
                 } else if (choice == 9998) {
-                    radioAns = letschoiceArray[2];
+                    radioAns = choiceArray[2];
                 } else if (choice == 9999) {
-                    radioAns = letschoiceArray[3];
+                    radioAns = choiceArray[3];
                 }
 
                 radioAns = radioAns.toLowerCase();
@@ -359,7 +359,7 @@ function toggleVisibilityPlus(number) {
             answerArray = [birdData.recordings[newbirdnumber].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
             correctAnswer = birdData.recordings[newbirdnumber].en;
 
-            var choiceArray = shuffle(answerArray);
+            choiceArray = shuffle(answerArray);
 
 
             answerFormDiv = '<div class ="answerForm"></div>';
@@ -394,6 +394,7 @@ function toggleVisibilityPlus(number) {
             //        radioCheckAnswer(radioAns);
             //
             //});
+        //
 
                 if (qnumber > 10) {
                     //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
