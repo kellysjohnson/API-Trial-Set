@@ -257,6 +257,13 @@ function toggleVisibilityPlus(number) {
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
+            // Hide, let's play
+            $('.letsplay').hide();
+            $('.newbird').show();
+
+            // Calls toggleVisibility which shows bird
+            toggleVisibilityPlus(number);
+
             var letschoiceArray = shuffle(letsanswerArray);
 
             answerFormDiv = '<div class ="answerForm"></div>'
@@ -269,10 +276,15 @@ function toggleVisibilityPlus(number) {
             $('.appendOtherColumn').append(answerFormDiv);
             $('.answerForm').append(radioButtons);
 
-            // On click to get value of radio button, and at the same time disable the other radio buttons
-            $('.appendOtherColumn').on('click', '.circle', function () {
-                choice = $('.circle').attr('id');
-                $(this).toggleClass('dos');
+        });
+
+        // On click to get value of radio button, and at the same time disable the other radio buttons
+        $('.appendOtherColumn').on('click', '.circle', function () {
+            choice = $('.circle').attr('id');
+            console.log(choice);
+            $(this).toggleClass('dos');
+
+            function choiceIs (choice) {
                 if (choice == 9996) {
                     radioAns = letschoiceArray[0];
                 } else if (choice == 9997) {
@@ -286,21 +298,18 @@ function toggleVisibilityPlus(number) {
                 radioAns = radioAns.toLowerCase();
                 console.log('This is the selected choice' + radioAns);
 
-                radioCheckAnswer(radioAns);
+                return radioAns;
+            }
 
-            });
-
-            // Calls toggleVisibility which shows bird
-            toggleVisibilityPlus(number);
-
-            // Hide, let's play
-            $('.letsplay').hide();
-            $('.newbird').show();
+            radioCheckAnswer(choiceIs(choice));
 
             // Append Points container
             var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' + total + '</div>';
+            $('.points').remove();
             $('.buttonsHolder').prepend(pointsDisplay);
+
         });
+
 
         $('.newbird').on("click", function () {
             qnumber += 1;
@@ -363,28 +372,28 @@ function toggleVisibilityPlus(number) {
             $('.appendOtherColumn').append(answerFormDiv);
             $('.answerForm').append(radioButtons);
 
-            // On click to get value of radio button, and at the same time disable the other radio buttons
-            $('.appendOtherColumn').on('click', '.circle', function () {
-                choice = $('.circle').attr('id');
-                $(this).toggleClass('dos');
-                if (choice == 9996) {
-                    radioAns = choiceArray[0];
-                } else if (choice == 9997) {
-                    radioAns = choiceArray[1];
-                } else if (choice == 9998) {
-                    radioAns = choiceArray[2];
-                } else if (choice == 9999) {
-                    radioAns = choiceArray[3];
-                }
 
-                radioAns = radioAns.toLowerCase();
-                console.log('This is the selected choice' + radioAns);
-
-                console.log(correctAnswer);
-
-                    radioCheckAnswer(radioAns);
-
-            });
+        // STAGE TO DELETE
+            //// On click to get value of radio button, and at the same time disable the other radio buttons
+            //$('.appendOtherColumn').on('click', '.circle', function () {
+            //    choice = $('.circle').attr('id');
+            //    $(this).toggleClass('dos');
+            //    if (choice == 9996) {
+            //        radioAns = choiceArray[0];
+            //    } else if (choice == 9997) {
+            //        radioAns = choiceArray[1];
+            //    } else if (choice == 9998) {
+            //        radioAns = choiceArray[2];
+            //    } else if (choice == 9999) {
+            //        radioAns = choiceArray[3];
+            //    }
+            //
+            //    radioAns = radioAns.toLowerCase();
+            //    console.log('This is the selected choice' + radioAns);
+            //
+            //        radioCheckAnswer(radioAns);
+            //
+            //});
 
                 if (qnumber > 10) {
                     //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
