@@ -193,12 +193,13 @@ function radioCheckAnswer (radio) {
         // Have to adjust so that You're Wrong only appends one time, when the incorrect answer is clicked, and not 8 times if 'New Bird' is clicked 8 times'
     } else {
         console.log("Nope!");
-        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X Try Another New Bird</div>';
+        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong Click New Bird</div>';
         $('.wrong').remove();
         $('.addAnswers').append(youreWrong);
-        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + correctAnswer + '</div>';
+        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div>';
         $('.giveAnswer').remove();
         $('.answerForm').prepend(theAnswerIs);
+        $('.circle').addClass("hidden");
     }
 }
 
