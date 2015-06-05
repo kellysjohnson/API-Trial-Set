@@ -11,6 +11,10 @@ body {
     margin-left: 15px;
 }
 
+.group {
+    margin-left: 200px;
+}
+
 .name {
     color:white;
 }
@@ -91,7 +95,6 @@ img {
 }
 
 .newbird {
-    margin-left:;
     background-color: rgba(44, 168, 208, 0.85);
     color: white;
     border-radius: 5px;

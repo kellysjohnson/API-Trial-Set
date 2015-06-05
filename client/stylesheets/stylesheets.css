@@ -2,6 +2,10 @@ body {
     color: #398439;
 }
 
+.group {
+    margin-left: 200px;
+}
+
 .copyright {
     background-color: lightgray;
     width:240px;
@@ -10,6 +14,8 @@ body {
 .correct {
     margin-left: 15px;
 }
+
+
 
 .name {
     color:white;
@@ -91,7 +97,6 @@ img {
 }
 
 .newbird {
-    margin-left:;
     background-color: rgba(44, 168, 208, 0.85);
     color: white;
     border-radius: 5px;
@@ -288,6 +293,6 @@ img {
     color: white;
 }
 
-.col-md-3 {
-    transition: 2s all;
-}
+/*.col-md-3 {*/
+    /*transition: 2s all;*/
+/*}*/

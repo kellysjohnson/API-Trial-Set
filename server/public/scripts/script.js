@@ -111,7 +111,7 @@ function dataDisplay(data){
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
         //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
-        answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
+        answerEntryField = '<div class="group"><input name="userProvided" type="text" id="search" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
 
         // ** for this - will NEED to hide answers and just leave ahref
         dataToAppend += '<div class="eachSet" id="' + i + '">' + data.recordings[i].en + '<span class="name reveal">' + i + '</span>' + ahrefListen + '</div>';
@@ -121,12 +121,17 @@ function dataDisplay(data){
 }
 
 // This function is used to check the answer when the ANSWER USER INPUT BOX is being used.
-function checkAnswer(element) {
-
+function checkAnswer() {
+    searchElement = birdData.recordings.length-1 + 1000;
+    console.log(searchElement);
 
     //convert answer to lower case for test
+    //element = $('#' + searchElement).val();
+    element = $('.js-query').val();
+    console.log(element + "is the user entered answer");
     element = element.toLowerCase();
     console.log(element);
+
 
     // Identify correct answer
     correctAnswer = birdData.recordings[objectID].en;
@@ -273,7 +278,7 @@ function toggleVisibility(number) {
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
-            $('.eachSet').append(answerEntryField);
+            $('.textboxHere').append(answerEntryField);
 
             var newBirdDiv = '<div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>';
 
@@ -329,14 +334,11 @@ function toggleVisibility(number) {
         // When click on search button, get value and pass it into checkanswer
         $('.appendHere').on("click", '.js-search', function () {
 
-            var element = $('js-query').val();
-            console.log(element);
-
             //Hide previous answers
             $('.correct').remove();
             $('.wrong').remove();
 
-            checkAnswer(element);
+            checkAnswer();
 
             //Try to disable the search button so that only one click can occur per answer
             $(this).attr("disabled", true);
