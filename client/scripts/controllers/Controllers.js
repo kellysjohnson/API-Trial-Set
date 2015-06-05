@@ -34,14 +34,7 @@ myApp.controller('FlagCtrl',['$scope', function($scope){
             code: 'new&%20zealand'},
         {   name: 'Canada',
             country: '/assets/Canada-Flag-icon.png',
-            code: 'canada'},
-        {   name: 'Djibouti',
-            country: '/assets/Djibouti-Flag-icon.png',
-            code: 'djibouti'},
-
-        {   name: 'Germany',
-            country: '/assets/Germany-Flag-icon.png',
-            code: 'germany'}
+            code: 'canada'}
         ];
     }]);
 

@@ -28,6 +28,8 @@ var newbirdnumber;
 var answerArray = [];
 var choiceArray = [];
 
+var answerEntryField;
+
 var number;
 var objectID;
 var correctAnswer;
@@ -109,22 +111,20 @@ function dataDisplay(data){
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
         //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
+        answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
 
-        var answerEntryField = '<div class="input-group"><input name="user-provided" type="text" id="' + submitnum + '" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
-
-        dataToAppend += '<div class="eachSet" id="' + i + '"><div class="row one"><div class="item"><div class="recording"> Recording'+ ' ' + num + ': ' + '<span class="name reveal">' + data.recordings[i].en + '</span>' + ahrefListen + '</div><div class="row two"><div class="answer"> Answer:' + answerEntryField + '</div></div></div></div></div>';
+        // ** for this - will NEED to hide answers and just leave ahref
+        dataToAppend += '<div class="eachSet" id="' + i + '">' + data.recordings[i].en + '<span class="name reveal">' + i + '</span>' + ahrefListen + '</div>';
     }
 
     $('.appendHere').append(dataToAppend);
 }
 
 // This function is used to check the answer when the ANSWER USER INPUT BOX is being used.
-function checkAnswer() {
-    searchElement = objectID + 1000;
-    console.log(searchElement);
+function checkAnswer(element) {
+
 
     //convert answer to lower case for test
-    element = $('#' + searchElement).val();
     element = element.toLowerCase();
     console.log(element);
 
@@ -135,23 +135,35 @@ function checkAnswer() {
 
     //test for correct answer
     if (correctAnswer == element) {
-        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
+        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div><div class="buffer3">Something</div>';
+        $('.correct').remove();
+        $('.buffer3').remove();
         $('.addAnswers').append(youreCorrect);
         console.log("Hi");
 
-    // ASK SCOTT: Better way to update just the number of points earned??
-        $('.points').remove();
+    // Write them to database per Joseph suggestion
         sum = sum +10;
         if (sum >= 100){sum = 100}
         var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
-        $('.buttonsHolder').prepend(pointsDisplay);
+        $('.points').replaceWith(pointsDisplay);
 
     } else {
         console.log("Nope!");
-        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong X</div>';
+        youreWrong = '<div class="buffer"> Something </div><div class="btn btn-group-sm btn-danger wrong">Wrong Click \'New Bird\'</div>';
+        $('.wrong').remove();
+        $('.buffer').remove();
         $('.addAnswers').append(youreWrong);
+        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div><div class="buffer2"> Something </div>';
+        $('.giveAnswer').remove();
+        $('.buffer2').remove();
+        $('.countries').append(theAnswerIs);
+        var pointsDisplay = '<div class="btn btn-group-sm points"> Points: ' + sum + '/' +total+ '</div>';
+        $('.points').replaceWith(pointsDisplay);
 
     }
+        var newBirdInputDiv = '<div class="btn btn-group-sm newbird2">New Bird</div>';
+
+        $('.newbird').replaceWith(newBirdInputDiv);
 }
 
 // Function, check radio button for correct answer
@@ -168,38 +180,39 @@ function radioCheckAnswer (radio) {
     console.log("The correct answer is:" + correctAnswer);
     console.log("The selected answer is:" + radio);
     if (correctAnswer == radio) {
-        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div>';
+        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div><div class="buffer3">Something</div>';
         $('.correct').remove();
+        $('.buffer3').remove();
         $('.addAnswers').append(youreCorrect);
         console.log("Hi");
 
 
 // ASK SCOTT: Better way to update just the number of points earned??  Joseph suggested - write answer, question num, points - all to the database
-        $('.points').remove();
         sum = sum +10;
         if (sum >= 100){sum = 100}
+
+        var pointsDisplay = '<div class="btn btn-group-sm points"> Points: ' + sum + '/' +total+ '</div>';
+        $('.points').replaceWith(pointsDisplay);
 
         var addpoints = '<div class="plusten"> +10 </div>';
         $('.plusten').remove();
         $('.appendOtherColumn').prepend(addpoints).fadeIn(1000);
 
-        var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
-        $('.buttonsHolder').prepend(pointsDisplay);
-
-
-        // Storing previous answer so that the multiple appends of wrong can be eliminated.
-        previousradioAnswer = correctAnswer;
-
-        // Have to adjust so that You're Wrong only appends one time, when the incorrect answer is clicked, and not 8 times if 'New Bird' is clicked 8 times'
     } else {
         console.log("Nope!");
-        youreWrong = '<div class="btn btn-group-sm btn-danger wrong">Wrong Click New Bird</div>';
+        youreWrong = '<div class="buffer"> Something </div><div class="btn btn-group-sm btn-danger wrong">Wrong Click \'New Bird\'</div>';
         $('.wrong').remove();
+        $('.buffer').remove();
         $('.addAnswers').append(youreWrong);
-        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div>';
+        var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div><div class="buffer2"> Something </div>';
         $('.giveAnswer').remove();
-        $('.answerForm').prepend(theAnswerIs);
-        $('.circle').addClass("hidden");
+        $('.buffer2').remove();
+        $('.countries').append(theAnswerIs);
+        var pointsDisplay = '<div class="btn btn-group-sm points"> Points: ' + sum + '/' +total+ '</div>';
+        $('.points').replaceWith(pointsDisplay);
+
+        $('.answerForm').hide();
+
     }
 }
 
@@ -216,17 +229,18 @@ function toggleVisibility(number) {
     console.log(visBird);
 }
 
-// Function displays the bird based on the index determined by random number.
-function toggleVisibilityPlus(number) {
-    var visBird = document.getElementById(number);
-
-    if (visBird.style.display = "none") {
-        visBird.style.display = "block"
-    } else {
-        visBird.style.display = "none"
-    }
-    console.log('visBird is the element by Id for number' + visBird);
-}
+//
+//// Function displays the bird based on the index determined by random number.
+//function toggleVisibilityPlus(number) {
+//    var visBird = document.getElementById(number);
+//
+//    if (visBird.style.display = "none") {
+//        visBird.style.display = "block"
+//    } else {
+//        visBird.style.display = "none"
+//    }
+//    console.log('visBird is the element by Id for number' + visBird);
+//}
 
 
     $(document).ready(function() {
@@ -242,41 +256,91 @@ function toggleVisibilityPlus(number) {
         });
 //
 
-        $('.letsplay').on("click", function () {
-            // Using the length of the array provided, a bird object is randomly selected
+        $('.userInput').on("click", function(){
+            $('.buttonsHolder').hide();
+            $('.newbird').show();
+            $('.points').show();
 
             var ider = birdData.recordings.length - 1;
-                number = randomNumber(0, ider);
+            number = randomNumber(0, ider);
 
             console.log('Random number for letsplay' + number);
 
-                objectID = number;
-                previous = number;
+            toggleVisibility(number);
 
-            // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-                answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            objectID = number;
+            previous = number;
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
-            // Hide, let's play
-            $('.letsplay').hide();
+            $('.eachSet').append(answerEntryField);
+
+            var newBirdDiv = '<div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>';
+
+            $('.appendOtherColumn').append(answerFormDiv);
+            $('.answerForm').prepend(newBirdDiv);
+
+        });
+
+        $('.radiochoice').on("click", function () {
+            $('.buttonsHolder').hide();
             $('.newbird').show();
+            $('.points').show();
 
-            // Calls toggleVisibility which shows bird
-            toggleVisibilityPlus(number);
+            var ider = birdData.recordings.length - 1;
+            number = randomNumber(0, ider);
 
+            console.log('Random number for letsplay' + number);
+
+            toggleVisibility(number);
+
+            objectID = number;
+            previous = number;
+
+            // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
+            answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+
+            console.log('This is the id that matches the random number' + birdData.recordings[number].en + number);
+
+            console.log(answerArray);
             choiceArray = shuffle(answerArray);
+            console.log(choiceArray);
 
-            answerFormDiv = '<div class ="answerForm"></div>'
+            answerFormDiv = '<div class ="answerForm"></div>';
 
-            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
+            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>';
 
+            var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
+
+            //var newBirdDiv = '<div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>';
+
             $('.appendOtherColumn').append(answerFormDiv);
+
+            //$('.answerForm').prepend(newBirdDiv);
+            $('.points').replaceWith(pointsDisplay);
+
             $('.answerForm').append(radioButtons);
 
+        });
+
+        // When click on search button, get value and pass it into checkanswer
+        $('.appendHere').on("click", '.js-search', function () {
+
+            var element = $('js-query').val();
+            console.log(element);
+
+            //Hide previous answers
+            $('.correct').remove();
+            $('.wrong').remove();
+
+            checkAnswer(element);
+
+            //Try to disable the search button so that only one click can occur per answer
+            $(this).attr("disabled", true);
+            console.log(this);
         });
 
         // On click to get value of radio button, and at the same time disable the other radio buttons
@@ -304,11 +368,6 @@ function toggleVisibilityPlus(number) {
 
             radioCheckAnswer(choiceIs(choice));
 
-            // Append Points container
-            var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' + total + '</div>';
-            $('.points').remove();
-            $('.buttonsHolder').prepend(pointsDisplay);
-
         });
 
 
@@ -330,6 +389,7 @@ function toggleVisibilityPlus(number) {
             $('.wrong').remove();
             $('.questions').remove();
             $('.plusten').remove();
+            $('.giveAnswer').remove();
 
 
             // Display which question, out of how many that you are on
@@ -342,26 +402,30 @@ function toggleVisibilityPlus(number) {
 
             // Using the length of the array provided, a bird object is randomly selected
             var ider = birdData.recordings.length - 1;
-            newbirdnumber = randomNumber(0, ider);
-            console.log(newbirdnumber);
-            objectID = newbirdnumber;
+            number = randomNumber(0, ider);
+            console.log(number);
+            objectID = number;
 
             // Calls toggleVisibility which shows bird
-            toggleVisibility(newbirdnumber);
+            toggleVisibility(number);
 
             // Sets previous to be used when the next button is clicked again.
-            previous = newbirdnumber;
+            previous = number;
 
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-            answerArray = [birdData.recordings[newbirdnumber].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
-            correctAnswer = birdData.recordings[newbirdnumber].en;
+            answerArray = [birdData.recordings[number].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            correctAnswer = birdData.recordings[number].en;
 
+            console.log("This is the bird index number" + number);
+            console.log('This is the id that matches the random number' + birdData.recordings[number].en);
+
+            console.log(answerArray);
             choiceArray = shuffle(answerArray);
-
+            console.log(choiceArray);
 
             answerFormDiv = '<div class ="answerForm"></div>';
 
@@ -373,64 +437,83 @@ function toggleVisibilityPlus(number) {
             $('.appendOtherColumn').append(answerFormDiv);
             $('.answerForm').append(radioButtons);
 
-
-        // STAGE TO DELETE
-            //// On click to get value of radio button, and at the same time disable the other radio buttons
-            //$('.appendOtherColumn').on('click', '.circle', function () {
-            //    choice = $('.circle').attr('id');
-            //    $(this).toggleClass('dos');
-            //    if (choice == 9996) {
-            //        radioAns = choiceArray[0];
-            //    } else if (choice == 9997) {
-            //        radioAns = choiceArray[1];
-            //    } else if (choice == 9998) {
-            //        radioAns = choiceArray[2];
-            //    } else if (choice == 9999) {
-            //        radioAns = choiceArray[3];
-            //    }
-            //
-            //    radioAns = radioAns.toLowerCase();
-            //    console.log('This is the selected choice' + radioAns);
-            //
-            //        radioCheckAnswer(radioAns);
-            //
-            //});
-        //
-
                 if (qnumber > 10) {
-                    //var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
-                    //if (result == "yes") {
+                    var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
+                    if (result == "yes") {
+                        totalforGame = sum;
+                        location.reload();
+                        }
+                    //var $scope = angular.element($('.points')).scope();
+                    //$scope.$apply(function () {
+                    //    $scope.player = Player.find({}, "name").update("points", {points: sum});
+                    //});
+
+
+                    else {
+                        $('.container').hide();
+                        alert("Thanks for playing!");
+                        }
+                    }
+            });
+
+        $('.newbird2').on("click", function () {
+            qnumber += 1;
+
+            // Deletes the previously displayed bird object.  Previous is set at the end of on-click with the clicked id number.
+            var prevBird = document.getElementById(previous);
+            if (prevBird.style.display = "block") {
+                prevBird.style.display = "none"
+            }
+
+            // Re-able the "Submit" button
+            $('.js-search').attr("disabled", false);
+
+            // Hide correct button
+            $('.correct').remove();
+            $('.wrong').remove();
+            $('.questions').remove();
+            $('.plusten').remove();
+            $('.giveAnswer').remove();
+
+
+            // Display which question, out of how many that you are on
+            displayQuestions = '<p class="questions"> Question: ' + qnumber + '/' + numQs + '</p>';
+            if (qnumber == 2) {
+                $('.underflagdiv').replaceWith(displayQuestions);
+            } else {
+                $('.flagdiv').append(displayQuestions);
+            }
+
+            // Using the length of the array provided, a bird object is randomly selected
+            var ider = birdData.recordings.length - 1;
+            number = randomNumber(0, ider);
+            console.log(number);
+            objectID = number;
+
+            // Calls toggleVisibility which shows bird
+            toggleVisibility(number);
+
+            // Sets previous to be used when the next button is clicked again.
+            previous = number;
+
+            if (qnumber > 10) {
+                var result = prompt("Would you like to start a new game?  Type 'yes' or 'no'");
+                if (result == "yes") {
                     totalforGame = sum;
-
-                    var $scope = angular.element($('.points')).scope();
-                    $scope.$apply(function () {
-                        $scope.player = Player.find({}, "name").update("points", {points: sum});
-                    });
-
                     location.reload();
-                    //} else {
-                    //    $('.container').hide();
-                    //    alert("Thanks for playing!");
-                    //}
                 }
-            });
+                //var $scope = angular.element($('.points')).scope();
+                //$scope.$apply(function () {
+                //    $scope.player = Player.find({}, "name").update("points", {points: sum});
+                //});
 
 
-            //// Audio2 is to replace the listen button with an audio track, mayhaps
-            //var audio2 = '<audio src="birdData.recordings[number].file" controls></audio>';
-
-
-            $('.appendHere').on("click", '.js-search', function () {
-
-                //Hide previous answers
-                $('.correct').remove();
-                $('.wrong').remove();
-
-                checkAnswer();
-
-                //Try to disable the search button so that only one click can occur per answer
-                $(this).attr("disabled", true);
-            });
+                else {
+                    $('.container').hide();
+                    alert("Thanks for playing!");
+                }
+            }
+        });
 
             // TO DO: Need to resolve HOW to get KEYPRESS to work
             //var keycode;
@@ -561,29 +644,31 @@ function toggleVisibilityPlus(number) {
 //**************************************************************************************************************************************************//
             $('.headerflag').on("click", ".specificflag", function () {
                 $('.letsplay').show();
+                $('.radiochoice').show();
+                $('.userInput').show();
                 $('.nameentry').hide();
                 console.log("I clicked a flag....");
                 var country = $(this).attr('id');
                 console.log(country);
 
             });
-            //    // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
-            //    $.ajax({
-            //        type: 'GET',
-            //        url: localRoute,
-            //        jsonCallback: 'callback',
-            //        crossDomain: true,
-            //        success: function (data) {
-            //            console.log(data);
-            //            dataDisplay(data);
-            //            console.log("I work")
-            //        },
-            //        complete: console.log("Finished ajax call"),
-            //        error: function (xhr) {
-            //            console.log('Danger Will Robinson, danger!');
-            //            console.log(xhr);
-            //        }
-            //    });
+                // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
+                $.ajax({
+                    type: 'GET',
+                    url: localRoute,
+                    jsonCallback: 'callback',
+                    crossDomain: true,
+                    success: function (data) {
+                        console.log(data);
+                        dataDisplay(data);
+                        console.log("I work")
+                    },
+                    complete: console.log("Finished ajax call"),
+                    error: function (xhr) {
+                        console.log('Danger Will Robinson, danger!');
+                        console.log(xhr);
+                    }
+                });
 //**************************************************************************************************************************************************//
                 //$.ajax({
                 //    type: 'POST',

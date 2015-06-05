@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOC html>
 
 <!--ng-app="bird.song.audio"-->
 
@@ -50,19 +50,25 @@
                     </form>
                 <h3> Bird Watchers </h3>
                     <div class="playerlist">
-                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div><div class="btn btn-xs" ng-click="remove(player)">X</div></div></div>
+                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div><div class="btn btn-xs" ng-click="remove(player)">remove</div></div></div>
                     </div>
                 </div>
     </div>
         <!--<div class="col-md-offset-2">-->
             <!--<main ng-view></main>-->
         <!--</div>-->
-
-        <div class="buttonsHolder">
+    <div class="row">
+        <div class="buttonsHolder col-md-10">
             <div class="letsplay btn btn-group-sm" style="display:none"> Let's Play! </div>
-            <div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>
+            <div class="radiochoice btn btn-group-sm" style="display:none"> Multiple Choice </div>
+            <div class="userInput btn btn-group-sm" style="display:none"> Name That Bird </div>
         </div>
-        <div class="addAnswers">
+        <div class="pointsAndNewBird col-md-10">
+            <div class="btn btn-group-sm points" style="display:none">Points: 0 / 10</div>
+            <div class="btn btn-group-sm newbird" style="display:none">New Bird</div>
+
+        </div>
+        <div class="addAnswers col-md-10">
 
         </div>
         <!--<div class="input-group">-->
@@ -71,20 +77,20 @@
                 <!--<button class="btn btn-input-group btn-default js-search"><span class="search">Search</span></button>-->
             <!--</div>-->
         <!--</div>-->
+    </div>
         <br/>
-        <div class="row 10">
+
+    <div class="row">
             <div class="col-md-6">
                 <div class="appendHere"></div>
             </div>
             <div class="col-md-6">
                 <div class="appendOtherColumn"></div>
             </div>
-        </div>
-
     </div>
 
     <!-- Users go here -->
-
+</div>
 
 <!--START SCRIPTS-->
             <script src="../stylesheets/jquery.min.js"></script>

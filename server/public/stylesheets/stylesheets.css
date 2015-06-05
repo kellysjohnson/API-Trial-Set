@@ -7,12 +7,27 @@ body {
     width:240px;
 }
 
+.correct {
+    margin-left: 15px;
+}
+
 .name {
     color:white;
 }
 
+.buffer, .buffer2 {
+    color: white;
+    font: 18px;
+}
+
+.buffer3 {
+    color: white;
+    font: 10px;
+}
+
 .reveal {
     color:white;
+    display:none;
 }
 
 img {
@@ -24,6 +39,10 @@ img {
     display:inline-block;
 }
 
+.specificflag {
+    border: 25px;
+}
+
 .reveal:hover {
     font-size:11px;
     color:saddlebrown;
@@ -32,6 +51,7 @@ img {
 .count {
     margin-left:10px;
 }
+
 .photo {
     margin-left: 15px;
 }
@@ -58,11 +78,11 @@ img {
 }
 
 .countries {
-    margin-left: 4px;
+    margin-left: 54px;
 }
 
 .eachSet {
-    margin-left: 220px;
+    margin-left: 400px;
     display: none;
 }
 
@@ -71,7 +91,21 @@ img {
 }
 
 .newbird {
-    margin-left: 2px;
+    margin-left:;
+    background-color: rgba(44, 168, 208, 0.85);
+    color: white;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #542a0a;
+}
+
+.newbird2 {
+    margin-left:;
+    background-color: rgba(44, 168, 208, 0.85);
+    color: white;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #542a0a;
 }
 
 .radioButtons {
@@ -94,35 +128,58 @@ img {
     margin-left: 538px;
 }
 
-.letsplay {
-    margin-left: 420px;
-    background-color: darkseagreen;
+.radiochoice {
+    background-color: rgba(44, 168, 208, 0.85);
+    color: white;
     border-radius: 5px;
     border-width: 1px;
-    border-color: #8a6d3b;
-    color: #8a6d3b;
+    border-color: #542a0a;
+
+}
+
+.userInput {
+    background-color: darkseagreen;
+    color: white;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #542a0a;
+
+}
+
+.letsplay {
+    margin-left: 330px;
+    background-color: white;
+    color: #930000;
+    border-radius: 5px;
+    border-width: 0px;
+    border-color: #542a0a;
     padding-left: 10px;
 }
 
-
-.popup2 {
-    color:white;
-    text-decoration: none;
+.letsplay:hover {
+    color: #930000;
 }
 
-.popup2:hover {
-    text-decoration: none;
-    color: white;
+.addMargin {
+    margin-top: 20px;
+}
+
+.wrong {
+    margin-left: 30px;
 }
 
 .points {
-    margin-left: 420px;
+    margin-left:550px;
     background-color: white;
+    color: #930000;
     border-radius: 5px;
     border-width: 1px;
-    border-color: #8a6d3b;
-    color: darkseagreen;
+    border-color: #542a0a;
     padding-left: 10px;
+}
+
+.points:hover {
+    color: #930000;
 }
 
 .underflagdiv {
@@ -130,8 +187,20 @@ img {
 }
 
 .nameentry {
-    margin-right: 50px;
-    display:block;
+    margin-left: 365px;
+    display: block;
+
+}
+
+.brown {
+    background-color: #8a6d3b;
+    color: white;
+    text-decoration: none;
+    border-color: darkseagreen;
+}
+
+.brown:hover {
+    color: black;
 }
 
 .giveAnswer {
@@ -151,24 +220,18 @@ img {
     margin-left: 2px;
 }
 
+.size {
+    margin-right: 100px;
+    text-align: center;
+}
+
 .unit {
     display:inline-block;
+    text-align: center;
 }
 
 .size {
     font-size:18px;
-}
-
-.brown {
-    background-color: #8a6d3b;
-    color: white;
-    text-decoration: none;
-    border-color: darkseagreen;
-}
-
-.brown:hover {
-    color: white;
-    text-decoration: none;
 }
 
 
@@ -176,12 +239,6 @@ img {
     color: rgba(44, 168, 208, 0.85);
     margin-left: 310px;
 }
-
-.points:hover {
-    color: white;
-    text-decoration: none;
-}
-
 
 #modal-background {
     display: none;
@@ -219,4 +276,18 @@ img {
 
 #modal-background.active, #modal-content.active {
     display: block;
+}
+
+.popup2 {
+    color:white;
+    text-decoration: none;
+}
+
+.popup2:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.col-md-3 {
+    transition: 2s all;
 }
