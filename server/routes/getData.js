@@ -11,6 +11,7 @@ var unitedStates = 'united&%20states';
 
 var country = 'france';
 
+http://www.xeno-canto.org/api/2/recordings?query=cnt:united&%20states
 
 // https://docs.nodejitsu.com/articles/HTTP/clients/how-to-create-a-HTTP-request
 var options =  domain + query + countryGeneric + country;

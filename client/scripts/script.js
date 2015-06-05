@@ -55,6 +55,7 @@ var radioButtons;
 var previousradioAnswer;
 var radioAns;
 var answerFormDiv;
+var fileLocation;
 
 var n;                  //radio button, random array index.
 var o;                  //radio button, random array index.
@@ -111,6 +112,10 @@ function dataDisplay(data){
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';
 
         //modal = '<div id="modal-background"></div><div id="modal-content"><div class="audio">'+ audio +'</div><button id="modal-close">Close Modal Window</button> </div>';
+        modal ='<a href="#openModal">Listen</a><div id="openModal" class="modalDialog"><div><a href="#close" title="Close" class="close">X</a><h2>Bird Song</h2></div></div>';
+
+
+        // answerEntryField
         answerEntryField = '<div class="group"><input name="userProvided" type="text" id="search" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
 
         // ** for this - will NEED to hide answers and just leave ahref
@@ -250,17 +255,6 @@ function toggleVisibility(number) {
 
 
     $(document).ready(function() {
- //Poor mans version, to just copy past the json data into this file, and get object elements.
-        $.get('25MayDataUS.json', function(data) {
-            birdData = data;
-            console.log(".get json data works");
-            console.log((birdData.recordings.length));
-
-            dataDisplay(data);
-            //var aRecording = data.recordings[0].en;
-            //alert(aRecording);
-        });
-//
 
         $('.userInput').on("click", function(){
             $('.buttonsHolder').hide();
@@ -342,6 +336,7 @@ function toggleVisibility(number) {
 
             //Try to disable the search button so that only one click can occur per answer
             $(this).attr("disabled", true);
+            document.getElementById('search').value = '';
             console.log(this);
         });
 
@@ -350,6 +345,8 @@ function toggleVisibility(number) {
             choice = $(this).attr('id');
             console.log(choice);
             $(this).toggleClass('dos');
+            $(this).next().toggleClass('deepbrown');
+            $('.circle').hide()
 
             function choiceIs (choice) {
                 if (choice == 9996) {
@@ -532,147 +529,43 @@ function toggleVisibility(number) {
             // ************************************************* KEYPRESS
 
 
-// Try to create a pop up window so that the audio file will display in pop up window.
-//
-//        //var matchClass=['popup1','popup2','popup3'];
-//        ////Set your 3 basic sizes and other options for the class names above - create more if needed
-//        //var popup1 = 'width=400,height=300,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
-//        var popup2 = 'width=400,height=400,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
-//        //var popup3 = 'width=1000,height=750,toolbar=0,menubar=0,location=0,status=1,scrollbars=1,resizable=1,left=20,top=20';
-//
-//        //The pop-up function
-//        function tfpop(){
-//            var x = 0;
-//            var popClass;
-//            ////Cycle through the class names
-//            //while(x < matchClass.length){
-//            //    popClass = "'."+matchClass[x]+"'";
-//            //    //Attach the clicks to the popup classes
-//            $(eval(popup2)).click(function() {
-//                //Get the destination URL and the class popup specs
-//                console.log(this);
-//
-//                var popurl = $(this).attr('href');
-//
-//                var popupSpecs = $(this).attr('class');
-//                //Create a "unique" name for the window using a random number
-//                var popupName = Math.floor(Math.random()*10000001);
-//                //Opens the pop-up window according to the specified specs
-//                newwindow=window.open(popurl,popupName,eval(popupSpecs));
-//                return false;
-//            });
-//
-//        }
-//
-//        $('.appendHere').on("click", '#listennum', function () {
-//            console.log('I clicked on listen');
-//            //$(function(){
-//            //    console.log("I tried to load a modal");
-//            //    $("#modal-launcher, #modal-close").click(function () {
-//            //        $("#modal-content,#modal-background").toggleClass("active");
-//            //    });
-//            $(function() {
-//                tfpop();
-//            });
-//
-//        });
-
-
-            ////comment out appController using Angular because that does NOT seem to be working.
-            //var myApp = angular.module('bird.song.audio', ['ngRoute', 'ui.bootstrap']);
-            //var myAppController = myApp.controller('ModalBSCtrl', function ($scope, $modal, $log) {
-            //
-            //
-            //    $scope.items = [activeLink];
-            //
-            //    $scope.animationsEnabled = true;
-            //
-            //    $scope.open = function (size) {
-            //
-            //        var modalInstance = $modal.open({
-            //            animation: $scope.animationsEnabled,
-            //            controller: 'ModalInstanceCtrl',
-            //            size: size,
-            //            resolve: {
-            //                items: function () {
-            //                    return $scope.items;
-            //                }
-            //            }
-            //        });
-            //
-            //        $scope.toggleAnimation = function () {
-            //            $scope.animationsEnabled = !$scope.animationsEnabled;
-            //        };
-            //
-            //    };
-            //
-            //    angular.module('bird.song.audio').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-            //
-            //        $scope.items = items;
-            //        $scope.selected = {
-            //            item: $scope.items[0]
-            //        };
-            //
-            //        $scope.ok = function () {
-            //            $modalInstance.close($scope.selected.item);
-            //        };
-            //
-            //        $scope.cancel = function () {
-            //            $modalInstance.dismiss('cancel');
-            //        };
-            //    });
-            // });
-
-
-//            //Then need to create 4 radio buttons
-//            //One radio button will take the name of the correct bird, using 'i'
-//            //The other three radio buttons will need to each use a random number to get the 'i',
-//            //     then extract the corresponding name.
-//
-//            //When the radio button is clicked.  That attribute/value must be tested against the 'correct' value.
-//            //  if they match, the a button unhides, that says "correct", a button also pops in that says "+10".
-//            //  if they do not match, then a box unhides that says "wrong" and the user can select another radio button.
-//
-//            //Alternatively, the user can use the user text input field, and that can be tested
-//            //  against the actual bird name...
-//            //     ??s can it be can insensitive/ can it be off by 1-2, more letters
-//
-//
-//        });
-
-
-            //Moving the ajax call into the flag on click so that the api call is made after the on click occurs.  Need to send 'country' back to server
-            // I learned I can send it when it is part of the url
-
-            // For example, 'localRoute + '/' + country,  = apiBirds/united&%20states
-//**************************************************************************************************************************************************//
-            $('.headerflag').on("click", ".specificflag", function () {
+     $('.headerflag').on("click", ".specificflag", function () {
                 $('.letsplay').show();
                 $('.radiochoice').show();
                 $('.userInput').show();
                 $('.nameentry').hide();
                 console.log("I clicked a flag....");
-                var country = $(this).attr('id');
-                console.log(country);
+                var fileLocation = $(this).attr('id');
+                console.log(fileLocation);
+
+         //Poor mans version, to just copy past the json data into this file, and get object elements.
+         $.get(fileLocation, function(data) {
+             birdData = data;
+             console.log(".get json data works");
+             console.log((birdData.recordings.length));
+
+             dataDisplay(data);
+
+         });
 
             });
                 // ajax call to the data served up by the server at /apiBirds.  Request/Response in index.js
-                $.ajax({
-                    type: 'GET',
-                    url: localRoute,
-                    jsonCallback: 'callback',
-                    crossDomain: true,
-                    success: function (data) {
-                        console.log(data);
-                        dataDisplay(data);
-                        console.log("I work")
-                    },
-                    complete: console.log("Finished ajax call"),
-                    error: function (xhr) {
-                        console.log('Danger Will Robinson, danger!');
-                        console.log(xhr);
-                    }
-                });
+                //$.ajax({
+                //    type: 'GET',
+                //    url: localRoute,
+                //    jsonCallback: 'callback',
+                //    crossDomain: true,
+                //    success: function (data) {
+                //        console.log(data);
+                //        dataDisplay(data);
+                //        console.log("I work")
+                //    },
+                //    complete: console.log("Finished ajax call"),
+                //    error: function (xhr) {
+                //        console.log('Danger Will Robinson, danger!');
+                //        console.log(xhr);
+                //    }
+                //});
 //**************************************************************************************************************************************************//
                 //$.ajax({
                 //    type: 'POST',
