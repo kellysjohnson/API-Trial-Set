@@ -93,7 +93,7 @@ function shuffle(array) {
 function dataDisplay(data){
     birdData = data;
     dataToAppend = '';
-    someSpace = 12345678765432;
+    someSpace = 1234567876543214;
     var numLength = data.recordings.length;
     console.log(numLength);
     for (i=0; i<data.recordings.length; i++){
@@ -114,7 +114,7 @@ function dataDisplay(data){
         answerEntryField = '<div class="group"><input name="userProvided" type="text" id="search" class="form-control js-query" placeholder="common name"><button class="btn btn-input-group submit js-search">Submit</button></div>';
 
         // ** for this - will NEED to hide answers and just leave ahref
-        dataToAppend += '<div class="eachSet" id="' + i + '">' + data.recordings[i].en + '<span class="name reveal">' + i + '</span>' + ahrefListen + '</div>';
+        dataToAppend += '<div class="eachSet col-sm-6" id="' + i + '"><span class="name reveal"></span>' + ahrefListen + '</div>';
     }
 
     $('.appendHere').append(dataToAppend);
@@ -140,7 +140,7 @@ function checkAnswer() {
 
     //test for correct answer
     if (correctAnswer == element) {
-        youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div><div class="buffer3">Something</div>';
+        youreCorrect = '<div class="buffer3">Something</div><div class="btn btn-group-sm btn-success correct">Correct !</div>';
         $('.correct').remove();
         $('.buffer3').remove();
         $('.addAnswers').append(youreCorrect);
@@ -151,6 +151,10 @@ function checkAnswer() {
         if (sum >= 100){sum = 100}
         var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
         $('.points').replaceWith(pointsDisplay);
+
+        var addpoints = '<div class="plusten"> +10 </div>';
+        $('.plusten').remove();
+        $('.appendOtherColumn').prepend(addpoints).fadeIn(1000);
 
     } else {
         console.log("Nope!");
@@ -263,7 +267,7 @@ function toggleVisibility(number) {
 
         $('.userInput').on("click", function(){
             $('.buttonsHolder').hide();
-            $('.newbird').show();
+            $('.newbird2').show();
             $('.points').show();
 
             var ider = birdData.recordings.length - 1;
@@ -278,7 +282,7 @@ function toggleVisibility(number) {
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
-            $('.textboxHere').append(answerEntryField);
+            $('.textHere').append(answerEntryField);
 
             var newBirdDiv = '<div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>';
 
@@ -332,7 +336,7 @@ function toggleVisibility(number) {
         });
 
         // When click on search button, get value and pass it into checkanswer
-        $('.appendHere').on("click", '.js-search', function () {
+        $('.textHere').on("click", '.js-search', function () {
 
             //Hide previous answers
             $('.correct').remove();

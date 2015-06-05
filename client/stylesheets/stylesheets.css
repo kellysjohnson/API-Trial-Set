@@ -1,21 +1,24 @@
 body {
     color: #398439;
+    text-align: center;
 }
 
-.group {
-    margin-left: 200px;
+.space {
+    font-size: 24px;
+    color: white;
 }
-
 .copyright {
     background-color: lightgray;
     width:240px;
 }
 
+.group {
+    margin-left: 330px;
+}
+
 .correct {
     margin-left: 15px;
 }
-
-
 
 .name {
     color:white;
@@ -37,12 +40,13 @@ body {
 }
 
 img {
-    height:50px;
-    width:50px;
+    height:80px;
+    width:80px;
 }
 
 .headerflag {
     display:inline-block;
+    margin-right: 15px;
 }
 
 .specificflag {
@@ -90,6 +94,7 @@ img {
 .eachSet {
     margin-left: 400px;
     display: none;
+    color: white;
 }
 
 .hold1,.hold2,.hold3,.hold4 {
@@ -152,7 +157,6 @@ img {
 }
 
 .letsplay {
-    margin-left: 330px;
     background-color: white;
     color: #930000;
     border-radius: 5px;
@@ -169,12 +173,8 @@ img {
     margin-top: 20px;
 }
 
-.wrong {
-    margin-left: 30px;
-}
-
 .points {
-    margin-left:550px;
+
     background-color: white;
     color: #930000;
     border-radius: 5px;
@@ -192,9 +192,7 @@ img {
 }
 
 .nameentry {
-    margin-left: 365px;
     display: block;
-
 }
 
 .brown {
