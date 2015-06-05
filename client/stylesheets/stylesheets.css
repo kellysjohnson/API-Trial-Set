@@ -169,12 +169,11 @@ img {
     color: #930000;
 }
 
-.addMargin {
-    margin-top: 20px;
+.wrong {
+    margin-left: 60px;
 }
 
 .points {
-
     background-color: white;
     color: #930000;
     border-radius: 5px;

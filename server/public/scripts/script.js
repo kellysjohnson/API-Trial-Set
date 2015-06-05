@@ -143,7 +143,7 @@ function checkAnswer() {
         youreCorrect = '<div class="buffer3">Something</div><div class="btn btn-group-sm btn-success correct">Correct !</div>';
         $('.correct').remove();
         $('.buffer3').remove();
-        $('.addAnswers').append(youreCorrect);
+        $('.pointsAndNewBird').append(youreCorrect);
         console.log("Hi");
 
     // Write them to database per Joseph suggestion
@@ -161,7 +161,7 @@ function checkAnswer() {
         youreWrong = '<div class="buffer"> Something </div><div class="btn btn-group-sm btn-danger wrong">Wrong Click \'New Bird\'</div>';
         $('.wrong').remove();
         $('.buffer').remove();
-        $('.addAnswers').append(youreWrong);
+        $('.pointsAndNewBird').append(youreWrong);
         var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div><div class="buffer2"> Something </div>';
         $('.giveAnswer').remove();
         $('.buffer2').remove();
@@ -170,9 +170,6 @@ function checkAnswer() {
         $('.points').replaceWith(pointsDisplay);
 
     }
-        var newBirdInputDiv = '<div class="btn btn-group-sm newbird2">New Bird</div>';
-
-        $('.newbird').replaceWith(newBirdInputDiv);
 }
 
 // Function, check radio button for correct answer
@@ -192,7 +189,7 @@ function radioCheckAnswer (radio) {
         youreCorrect = '<div class="btn btn-group-sm btn-success correct">Correct !</div><div class="buffer3">Something</div>';
         $('.correct').remove();
         $('.buffer3').remove();
-        $('.addAnswers').append(youreCorrect);
+        $('.pointsAndNewBird').append(youreCorrect);
         console.log("Hi");
 
 
@@ -205,14 +202,14 @@ function radioCheckAnswer (radio) {
 
         var addpoints = '<div class="plusten"> +10 </div>';
         $('.plusten').remove();
-        $('.appendOtherColumn').prepend(addpoints).fadeIn(1000);
+        $('.answerForm').prepend(addpoints).fadeIn(1000);
 
     } else {
         console.log("Nope!");
         youreWrong = '<div class="buffer"> Something </div><div class="btn btn-group-sm btn-danger wrong">Wrong Click \'New Bird\'</div>';
         $('.wrong').remove();
         $('.buffer').remove();
-        $('.addAnswers').append(youreWrong);
+        $('.pointsAndNewBird').append(youreWrong);
         var theAnswerIs = '<div class="btn btn-group-sm btn-default giveAnswer">The Answer is....  ' + birdData.recordings[objectID].en + '</div><div class="buffer2"> Something </div>';
         $('.giveAnswer').remove();
         $('.buffer2').remove();
@@ -317,21 +314,20 @@ function toggleVisibility(number) {
 
             answerFormDiv = '<div class ="answerForm"></div>';
 
-            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div>' +
+            radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9999"></div><div class="result">' + choiceArray[3] + '</div></div></div>';
+
+            $('.appendOtherColumn').append(answerFormDiv);
+            $('.answerForm').append(radioButtons);
 
             var pointsDisplay = '<div class="points btn btn-group-sm"> Points: ' + sum + '/' +total+ '</div>';
 
             //var newBirdDiv = '<div class="btn btn-group-sm newbird btn-info" style="display:none">New Bird</div>';
 
-            $('.appendOtherColumn').append(answerFormDiv);
-
             //$('.answerForm').prepend(newBirdDiv);
             $('.points').replaceWith(pointsDisplay);
-
-            $('.answerForm').append(radioButtons);
 
         });
 
@@ -498,6 +494,8 @@ function toggleVisibility(number) {
 
             // Calls toggleVisibility which shows bird
             toggleVisibility(number);
+
+            console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
             // Sets previous to be used when the next button is clicked again.
             previous = number;
