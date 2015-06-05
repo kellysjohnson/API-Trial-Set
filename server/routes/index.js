@@ -30,7 +30,8 @@ function GetData(){
 }
 
 // Allow users to be added to the database, by post and get.
-mongoose.connect("mongodb://localhost/api_trial");
+//mongoose.connect("mongodb://localhost/api_trial");
+mongoose.connect("mongodb://kmshimko:Hope44@ds059888.mongolab.com:59888/api_trial");
 
 var Player = mongoose.model('Player', {name: String, points: Number});
 
