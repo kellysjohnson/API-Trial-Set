@@ -102,10 +102,6 @@ function dataDisplay(data){
         var submitnum = i +1000;
         var listennum = i +2000;
 
-        n = randomNumber(0, numLength);
-        o = randomNumber(0, numLength);
-        p = randomNumber(0, numLength);
-
         var audio = data.recordings[i].file;
 
         var ahrefListen = '<div class="btn btn-group-sm brown"><a target="blank" ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
@@ -308,6 +304,10 @@ function toggleVisibility(number) {
 
             answerFormDiv = '<div class ="answerForm"></div>';
 
+            n = randomNumber(0, numLength);
+            o = randomNumber(0, numLength);
+            p = randomNumber(0, numLength);
+
             radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9998"></div><div class="result">' + choiceArray[2] + '</div></div></div>' +
@@ -427,6 +427,10 @@ function toggleVisibility(number) {
             console.log(choiceArray);
 
             answerFormDiv = '<div class ="answerForm"></div>';
+
+            n = randomNumber(0, numLength);
+            o = randomNumber(0, numLength);
+            p = randomNumber(0, numLength);
 
             radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
