@@ -56,6 +56,7 @@ var previousradioAnswer;
 var radioAns;
 var answerFormDiv;
 var fileLocation;
+var numLength;
 
 var n;                  //radio button, random array index.
 var o;                  //radio button, random array index.
@@ -95,7 +96,7 @@ function dataDisplay(data){
     birdData = data;
     dataToAppend = '';
     someSpace = 1234567876543214;
-    var numLength = data.recordings.length;
+    numLength = data.recordings.length;
     console.log(numLength);
     for (i=0; i<data.recordings.length; i++){
         var num = i+1;
@@ -103,6 +104,11 @@ function dataDisplay(data){
         var listennum = i +2000;
 
         var audio = data.recordings[i].file;
+
+        n = randomNumber(0, numLength);
+        o = randomNumber(0, numLength);
+        p = randomNumber(0, numLength);
+
 
         var ahrefListen = '<div class="btn btn-group-sm brown"><a target="blank" ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
         var angularListen = '<a ng-click="open()" class="click4modal" id="' + listennum +  '" href='+ audio +'>Listen</a>';

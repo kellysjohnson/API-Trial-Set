@@ -19,94 +19,92 @@
 
 </head>
 
-<body ng-app="myApp">
+<div ng-app="myApp">
 
 
 <div class="container">
 
-    <div class="searchBar col-sm-8 col-sm-offset-2">
+        <div class="searchBar col-sm-8 col-sm-offset-2">
 
-        <h1 class="header">Bird Songs: Our Feathered Friends</h1>
-        <h4 class="count"> Count to 3. 1,2,3 ...then click get a flock by picking on a country flag!</h4>
+            <h1 class="header">Bird Songs: Our Feathered Friends</h1>
+            <h4 class="count"> Count to 3. 1,2,3 ...then click get a flock by picking on a country flag!</h4>
 
-        <div class="countries">
-            <div ng-controller="FlagCtrl">
-                <div class="flagdiv">
-                    <div class="headerflag" ng-repeat="country in country">
-                        <img class="specificflag" id="{{country.file}}" ng-src="{{country.country}}">
-                        <!--<a href="#{{country.name}}"> {{country.name}}</a>-->
+            <div class="countries">
+                <div ng-controller="FlagCtrl">
+                    <div class="flagdiv">
+                        <div class="headerflag" ng-repeat="country in country">
+                            <img class="specificflag" id="{{country.file}}" ng-src="{{country.country}}">
+                            <!--<a href="#{{country.name}}"> {{country.name}}</a>-->
+                        </div>
                     </div>
+                    <p class="underflagdiv"> Questions </p>
                 </div>
-                <p class="underflagdiv"> Questions </p>
             </div>
         </div>
-    </div>
 
 
-    <div ng-controller="UserLoginController">
-                <div class=" nameentry col-sm-8 col-sm-offset-2">
-                    <!--<p ng-show="player.name"> Player: {{player.name}}</p>  No need to display player name.-->
-                    <form novalidate>
-                    <h4> New Player: <input type="text" ng-model="player.name"/><input type="submit" ng-click="add(player)" value="Save"/></h4>
-                    </form>
-                <h2> Bird Watchers </h2>
-                    <div class="playerlist">
-                        <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div><div class="btn btn-xs" ng-click="remove(player)">remove</div></div></div>
+        <div ng-controller="UserLoginController">
+                    <div class=" nameentry col-sm-8 col-sm-offset-2">
+                        <!--<p ng-show="player.name"> Player: {{player.name}}</p>  No need to display player name.-->
+                        <form novalidate>
+                        <h4> New Player: <input type="text" ng-model="player.name"/><input type="submit" ng-click="add(player)" value="Save"/></h4>
+                        </form>
+                    <h2> Bird Watchers </h2>
+                        <div class="playerlist">
+                            <div class="row unit"><div class=size ng-repeat="player in players">{{player.name}} {{player.points}}<div class="btn btn-xs">Login</div><div class="btn btn-xs" ng-click="remove(player)">remove</div></div></div>
+                        </div>
                     </div>
-                </div>
-    </div>
+        </div>
         <!--<div class="col-md-offset-2">-->
             <!--<main ng-view></main>-->
         <!--</div>-->
-    <div class="row">
-        <div class="buttonsHolder col-sm-8 col-sm-offset-2">
-            <div class="letsplay btn btn-group-md" style="display:none"> Let's Play! </div>
-            <div class="radiochoice btn btn-group-md" style="display:none"> Multiple Choice </div>
-            <div class="userInput btn btn-group-md" style="display:none"> Name That Bird </div>
+        <div class="row">
+            <div class="buttonsHolder col-sm-8 col-sm-offset-2">
+                <div class="letsplay btn btn-group-md" style="display:none"> Let's Play! </div>
+                <div class="radiochoice btn btn-group-md" style="display:none"> Multiple Choice </div>
+                <div class="userInput btn btn-group-md" style="display:none"> Name That Bird </div>
+            </div>
+
+            <div class="pointsAndNewBird col-sm-8 col-sm-offset-2">
+                <div class="btn btn-group-md points" style="display:none">Points: 0 / 10</div>
+                <div class="btn btn-group-md newbird" style="display:none">New Bird</div>
+                <div class="btn btn-group-md newbird2" style="display:none">New Bird</div>
+            </div>
         </div>
 
-        <div class="pointsAndNewBird col-sm-8 col-sm-offset-2">
-            <div class="btn btn-group-md points" style="display:none">Points: 0 / 10</div>
-            <div class="btn btn-group-md newbird" style="display:none">New Bird</div>
-            <div class="btn btn-group-md newbird2" style="display:none">New Bird</div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-4">
+                <div class="addAnswers"></div>
+            </div>
         </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-4">
-            <div class="addAnswers"></div>
-        </div>
-    </div>
         <!--<div class="input-group">-->
             <!--<input type="text" class="form-control js-query" placeholder="bird species">-->
             <!--<div class="input-group-btn">-->
                 <!--<button class="btn btn-input-group btn-default js-search"><span class="search">Search</span></button>-->
             <!--</div>-->
         <!--</div>-->
-    </div>
         <br/>
 
-    <div class="row">
-            <div class="col-sm-6">
-                <div class="appendHere"></div>
-            </div>
-            <div class="col-sm-3">
-                <div class="appendOtherColumn"></div>
-            </div>
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="appendHere"></div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="appendOtherColumn"></div>
+                </div>
+        </div>
+
+        <div class="row">
+                <div class="col-sm-6">
+                    <div class="textHere"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="moretextHere"></div>
+                </div>
+        </div>
     </div>
-
-    <div class="row">
-            <div class="col-sm-6">
-                <div class="textHere"></div>
-            </div>
-            <div class="col-sm-6">
-                <div class="moretextHere"></div>
-            </div>
-
-    </div>
-
-    <!-- Users go here -->
 </div>
+    <!-- Users go here -->
 
 <!--START SCRIPTS-->
             <script src="../stylesheets/jquery.min.js"></script>
