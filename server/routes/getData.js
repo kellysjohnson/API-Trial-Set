@@ -3,10 +3,10 @@ var router = express.Router();
 var http = require('http');
 var newURL = require('./index');
 
-var domain = 'http://www.xeno-canto.org/api/2/recordings';
-var query = '?query=';
 var countryGeneric = 'cnt:';
 
+var domain = 'http://www.xeno-canto.org/api/2/recordings';
+var query = '?query=';
 var unitedStates = 'united&%20states';
 
 var country = 'france';

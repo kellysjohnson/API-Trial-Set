@@ -105,9 +105,9 @@ function dataDisplay(data){
 
         var audio = data.recordings[i].file;
 
-        n = randomNumber(0, numLength);
-        o = randomNumber(0, numLength);
-        p = randomNumber(0, numLength);
+        //n = randomNumber(0, numLength);
+        //o = randomNumber(0, numLength);
+        //p = randomNumber(0, numLength);
 
 
         var ahrefListen = '<div class="btn btn-group-sm brown"><a target="blank" ng-click="audio = audio" class="popup2" href='+ audio +'>Listen</a></div>';
@@ -242,20 +242,6 @@ function toggleVisibility(number) {
     console.log(visBird);
 }
 
-//
-//// Function displays the bird based on the index determined by random number.
-//function toggleVisibilityPlus(number) {
-//    var visBird = document.getElementById(number);
-//
-//    if (visBird.style.display = "none") {
-//        visBird.style.display = "block"
-//    } else {
-//        visBird.style.display = "none"
-//    }
-//    console.log('visBird is the element by Id for number' + visBird);
-//}
-
-
     $(document).ready(function() {
 
         $('.userInput').on("click", function(){
@@ -300,19 +286,29 @@ function toggleVisibility(number) {
             previous = number;
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-            answerArray = [birdData.recordings[objectID].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
+            var testArray = [birdData.recordings[objectID].en];
 
             console.log('This is the id that matches the random number' + birdData.recordings[number].en + number);
 
-            console.log(answerArray);
-            choiceArray = shuffle(answerArray);
+            // While loop to test each value before putting it in the array to make sure that it isUnique  -  Thanks Rom!
+            while (testArray.length < 4) {
+                var random = randomNumber(0, numLength);
+                var x = birdData.recordings[random].en;
+                var isUnique = true;
+                for (var i=0; i<testArray.length; i++)
+                    if (testArray[i] == x) {
+                        isUnique = false;
+                    }
+                if (isUnique) {
+                    testArray.push(x);
+                }
+            }
+
+            console.log(testArray);
+            choiceArray = shuffle(testArray);
             console.log(choiceArray);
 
             answerFormDiv = '<div class ="answerForm"></div>';
-
-            n = randomNumber(0, numLength);
-            o = randomNumber(0, numLength);
-            p = randomNumber(0, numLength);
 
             radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
@@ -420,23 +416,33 @@ function toggleVisibility(number) {
             // Identify the link for playing the bird song
             activeLink = birdData.recordings[number].file;
 
+            correctAnswer = birdData.recordings[number].en;
 
             // Create radio buttons, put 'possible' answers in answers array, shuffle array and give the user options
-            answerArray = [birdData.recordings[number].en, birdData.recordings[n].en, birdData.recordings[o].en, birdData.recordings[p].en];
-            correctAnswer = birdData.recordings[number].en;
+            var testArray = [birdData.recordings[number].en];
+
+            // While loop to test each value before putting it in the array to make sure that it isUnique  -  Thanks Rom!
+            while (testArray.length < 4) {
+                var random = randomNumber(0, numLength);
+                var x = birdData.recordings[random].en;
+                var isUnique = true;
+                for (var i=0; i<testArray.length; i++)
+                    if (testArray[i] == x) {
+                        isUnique = false;
+                    }
+                    if (isUnique) {
+                        testArray.push(x);
+                    }
+            }
 
             console.log("This is the bird index number" + number);
             console.log('This is the id that matches the random number' + birdData.recordings[number].en);
 
-            console.log(answerArray);
-            choiceArray = shuffle(answerArray);
+            console.log(testArray);
+            choiceArray = shuffle(testArray);
             console.log(choiceArray);
 
             answerFormDiv = '<div class ="answerForm"></div>';
-
-            n = randomNumber(0, numLength);
-            o = randomNumber(0, numLength);
-            p = randomNumber(0, numLength);
 
             radioButtons = '<div class="row"><div class="circle" id="9996"></div><div class="result">' + choiceArray[0] + '</div></div></div>' +
             '<div class="row"><div class="circle" id="9997"></div><div class="result">' + choiceArray[1] + '</div></div></div>' +
